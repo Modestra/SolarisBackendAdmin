@@ -11,8 +11,8 @@ const router = createRouter({
             component: MainPage
         },
         {
-            path: '/AuthorizationPage',
-            name: 'AuthorizationPage',
+            path: '/auth',
+            name: 'auth',
             component: AuthorizationPage
         },
     ]

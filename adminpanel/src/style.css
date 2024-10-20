@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Primary and Surface Palettes */
 :root {
   --p-primary-50: var(--p-surface-50);
@@ -66,10 +65,18 @@
   --p-content-border-color: var(--p-surface-700);
   --p-content-hover-background: var(--p-surface-800);
   --p-content-hover-color: var(--p-surface-0);
-  --p-highlight-background: color-mix(in srgb, var(--p-primary-400), transparent 84%);
-  --p-highlight-color: rgba(255,255,255,.87);
-  --p-highlight-focus-background: color-mix(in srgb, var(--p-primary-400), transparent 76%);
-  --p-highlight-focus-color: rgba(255,255,255,.87);
+  --p-highlight-background: color-mix(
+    in srgb,
+    var(--p-primary-400),
+    transparent 84%
+  );
+  --p-highlight-color: rgba(255, 255, 255, 0.87);
+  --p-highlight-focus-background: color-mix(
+    in srgb,
+    var(--p-primary-400),
+    transparent 76%
+  );
+  --p-highlight-focus-color: rgba(255, 255, 255, 0.87);
   --p-text-color: var(--p-surface-0);
   --p-text-hover-color: var(--p-surface-0);
   --p-text-muted-color: var(--p-surface-400);
@@ -101,11 +108,11 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  /* margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100vh; */
 }
 
 h1 {
@@ -136,12 +143,12 @@ button:focus-visible {
   padding: 2em;
 }
 
-#app {
+/* #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
+} */
 
 @media (prefers-color-scheme: light) {
   :root {
