@@ -4,16 +4,12 @@
       <p class="form__text">Авторизация</p>
       <div class="form__fields">
         <div class="form__group">
-          <label for="name">Имя</label>
+          <label for="name">Логин</label>
           <InputText id="name" v-model:model-value="name" />
         </div>
         <div class="form__group">
-          <label for="age">Возраст</label>
+          <label for="age">Пароль</label>
           <InputText id="age" v-model:model-value="age" />
-        </div>
-        <div class="form__group">
-          <label for="classroom">Класс</label>
-          <InputText id="classroom" v-model:model-value="classroom" />
         </div>
         <Button @click="$router.push('/')">Войти</Button>
       </div>
@@ -48,6 +44,13 @@ const payload = reactive({
   -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.p-inputtext {
+  &:hover:enabled,
+  &:focus:enabled {
+    border: 1px solid orange;
+  }
 }
 .form {
   display: flex;
