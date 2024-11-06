@@ -26,23 +26,24 @@ export const useUserStore = defineStore("userStore", {
   actions: {
     async login(data: IUserData) {
       try {
-        const res = await axiosR.post("/user", data);
+        const res = await axiosR.post("/auth", data);
         this.token = res.data.token;
         this.error = false;
         this.user = res.data.user;
         this.successRes = true;
         localStorage.setItem("token", res.data.token);
+        return true;
       } catch (error) {
         this.error = true;
         this.successRes = false;
-        console.error("Login error:", error);
+        return false;
       }
     },
     autoLogin() {
       const token = localStorage.getItem("token");
       if (token) {
         axiosR
-          .post(`/auth/auto-login`, { token: token })
+          .post(`/auth/`, { token: token })
           .then((res) => {
             this.user = res.data;
           })

@@ -1,17 +1,27 @@
 <template>
-  <form @submit.prevent @click.enter action="#" class="form">
+  <form @submit.prevent="validateForm" @keyup.enter class="form">
     <div class="form__wrapper">
       <p class="form__text">Авторизация</p>
       <div class="form__fields">
         <div class="form__group">
-          <label for="name">Логин</label>
-          <InputText id="name" v-model:model-value="name" />
+          <label for="login">Логин</label>
+          <InputText id="login" v-model="login" />
         </div>
         <div class="form__group">
-          <label for="age">Пароль</label>
-          <InputText id="age" v-model:model-value="age" />
+          <label for="password">Пароль</label>
+          <InputText
+            :type="passwordVisible ? 'text' : 'password'"
+            id="password"
+            v-model="password"
+          />
+          <p @click="passwordVisible = !passwordVisible">
+            {{ passwordVisible ? "Скрыть" : "Показать" }}
+          </p>
         </div>
-        <Button @click="$router.push('/')">Войти</Button>
+        <Button type="submit">Войти</Button>
+        <div v-if="useUser.getError" class="error-message">
+          Неверный логин или пароль.
+        </div>
       </div>
     </div>
   </form>
@@ -19,17 +29,29 @@
 
 <script setup>
 import InputText from "primevue/inputtext";
-import { reactive, ref } from "vue";
+import { computed, ref } from "vue";
+import { useUserStore } from "../../stores/userStore";
+import { useRouter } from "vue-router";
 
-const name = ref("");
-const age = ref("");
-const classroom = ref("");
+const router = useRouter();
+const useUser = useUserStore();
+const login = ref("");
+const password = ref("");
+const passwordVisible = ref(false);
 
-const payload = reactive({
-  name: name.value,
-  age: age.value,
-  classroom: classroom.value,
-});
+const payload = computed(() => ({
+  login: login.value,
+  password: password.value,
+}));
+
+async function validateForm() {
+  if (login.value.length && password.value.length) {
+    const success = await useUser.login(payload.value);
+    if (success) {
+      router.push("/");
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
