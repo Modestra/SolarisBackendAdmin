@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import AuthorizationPage from "../views/AuthorizationPage.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -9,7 +10,6 @@ const router = createRouter({
       component: () => import("../views/MainPage.vue"),
       meta: { protected: true },
     },
-
     {
       path: "/auth",
       name: "auth",
@@ -42,22 +42,24 @@ const router = createRouter({
     {
       path: "/shop",
       name: "shop",
-      component: import("../views/ShopPage.vue"),
+      component: () => import("../views/ShopPage.vue"),
       meta: { protected: true },
     },
   ],
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some((route) => route.meta.protected)) {
-//     if (localStorage.getItem("token")) {
-//       next();
-//     } else {
-//       next("/");
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+
+  if (to.matched.some((route) => route.meta.protected)) {
+    if (token) {
+      next();
+    } else {
+      next("/auth");
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

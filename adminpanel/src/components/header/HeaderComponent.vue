@@ -67,7 +67,7 @@
           </div>
         </li>
         <li v-if="!exitVisible" class="header__list-item">
-          <Button @click="$router.push('/auth')">Выйти</Button>
+          <Button @click="logOut">Выйти</Button>
         </li>
       </ul>
     </nav>
@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import { RouterLink, useRoute } from "vue-router";
+import { RouterLink, useRoute, useRouter } from "vue-router";
 import Button from "primevue/button";
 import Sidebar from "primevue/sidebar";
 import { Links } from "../../interfaces/headerInterfaces";
@@ -84,6 +84,7 @@ import { Links } from "../../interfaces/headerInterfaces";
 const visible = ref(false);
 const exitVisible = ref(false);
 const route = useRoute();
+const router = useRouter();
 
 function checkPath() {
   exitVisible.value = route.path === "/auth";
@@ -99,6 +100,11 @@ const links: Links[] = [
 
 function handleLinkClick() {
   visible.value = !visible.value;
+}
+
+function logOut() {
+  localStorage.removeItem("token");
+  router.push("/auth");
 }
 onMounted(() => {
   checkPath();

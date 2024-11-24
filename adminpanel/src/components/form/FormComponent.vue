@@ -5,23 +5,20 @@
       <div class="form__fields">
         <div class="form__group">
           <label for="login">Логин</label>
-          <InputText id="login" v-model="login" />
+          <InputText id="login" v-model="formValue.username" />
         </div>
         <div class="form__group">
           <label for="password">Пароль</label>
           <InputText
             :type="passwordVisible ? 'text' : 'password'"
             id="password"
-            v-model="password"
+            v-model="formValue.password"
           />
           <p @click="passwordVisible = !passwordVisible">
             {{ passwordVisible ? "Скрыть" : "Показать" }}
           </p>
         </div>
-        <Button type="submit">Войти</Button>
-        <div v-if="useUser.getError" class="error-message">
-          Неверный логин или пароль.
-        </div>
+        <Button type="submit" @click="loginUser">Войти</Button>
       </div>
     </div>
   </form>
@@ -29,27 +26,29 @@
 
 <script setup>
 import InputText from "primevue/inputtext";
-import { computed, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { useUserStore } from "../../stores/userStore";
 import { useRouter } from "vue-router";
+import axios from "axios";
 
 const router = useRouter();
-const useUser = useUserStore();
-const login = ref("");
-const password = ref("");
+const userStore = useUserStore();
+
 const passwordVisible = ref(false);
 
-const payload = computed(() => ({
-  login: login.value,
-  password: password.value,
-}));
+const formValue = reactive({
+  username: "",
+  password: "",
+});
 
-async function validateForm() {
-  if (login.value.length && password.value.length) {
-    const success = await useUser.login(payload.value);
-    if (success) {
-      router.push("/");
+async function loginUser() {
+  try {
+    await userStore.login({ ...formValue });
+    if (localStorage.getItem("token")) {
+      router.push("/dashboard");
     }
+  } catch (err) {
+    console.error("Ошибка входа", err);
   }
 }
 </script>
