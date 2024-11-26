@@ -1,5 +1,5 @@
 <template>
-<<<<<<< HEAD
+  <<<<<<< HEAD
   <div class="mx-auto max-w-[1440px] px-[10px]">
     <div class="flex flex-col gap-4">
       main
@@ -21,7 +21,7 @@ async function fetchData() {
 }
 </script>
 =======
-  <main class="container main-page">
+<!-- <main class="container main-page">
     <table class="table">
       <thead>
         <tr>
@@ -54,11 +54,11 @@ async function fetchData() {
   </main>
 </template>
 
-<script setup></script>
+<script setup></script> -->
 
 <style lang="css" scoped>
 .main-page {
   min-height: 100vh;
 }
 </style>
->>>>>>> 22ef670e57846066ee16dd531b5b91c94714c45a
+<!-- >>>>>>> 22ef670e57846066ee16dd531b5b91c94714c45a -->

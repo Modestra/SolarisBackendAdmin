@@ -9,9 +9,7 @@ const axiosR = axios.create({
 axiosR.interceptors.request.use(
   (config) => {
     if (localStorage.getItem("token")) {
-      config.headers["Authorization"] = `Bearer ${localStorage.getItem(
-        "token"
-      )}`;
+      config.headers["Authorization"] = ` ${localStorage.getItem("token")}`;
       config.headers["X-Requested-With"] = "XMLHttpRequest";
     }
     return config;

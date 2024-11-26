@@ -45,7 +45,7 @@ async function loginUser() {
   try {
     await userStore.login({ ...formValue });
     if (localStorage.getItem("token")) {
-      router.push("/dashboard");
+      router.push("/account");
     }
   } catch (err) {
     console.error("Ошибка входа", err);
