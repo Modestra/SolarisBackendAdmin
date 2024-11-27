@@ -60,7 +60,7 @@ export const useUserStore = defineStore("userStore", {
     },
 
     async autoLogin() {
-      const token = cookie.get("token");
+      const token = localStorage.getItem("token");
       if (token) {
         try {
           const data = await autoLoginService(token);
