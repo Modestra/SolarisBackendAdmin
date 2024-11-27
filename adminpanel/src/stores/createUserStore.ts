@@ -1,24 +1,36 @@
 import { defineStore } from "pinia";
 import { CreatedUser } from "../interfaces/createUser";
+import { addUserService } from "../services/addUser";
 
-import axiosR from "../api/http";
 export const useCreateUserStore = defineStore("createUserStore", {
   state: () => ({
     userData: [] as CreatedUser[],
-    isFetching: false,
+    error: "",
   }),
 
   getters: {
     getUserData(state) {
       return state.userData;
     },
+    getUserError(state) {
+      return state.error;
+    },
   },
 
   actions: {
-    addUser(user: CreatedUser) {
-      axiosR.post("/user/create_user", user).then((res) => {
+    async addUser(user: CreatedUser) {
+      this.error = "";
+      try {
+        const res = await addUserService(user);
         this.userData.push(res.data);
-      });
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          this.error = err.message;
+          console.log(this.error);
+        } else {
+          this.error = "Неизвестная ошибка при создании пользователя";
+        }
+      }
     },
   },
 });

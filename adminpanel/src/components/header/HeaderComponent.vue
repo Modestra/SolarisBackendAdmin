@@ -2,7 +2,6 @@
   <header class="header">
     <nav class="header__nav">
       <ul class="header__list">
-        <li v-if="exitVisible"><p class="text-2xl">Админ панель</p></li>
         <li>
           <div class="flex justify-content-center">
             <Sidebar v-model:visible="visible">
@@ -42,11 +41,11 @@
                     </span>
                   </div>
                   <div class="overflow-y-auto">
-                    <ul class="list-none p-3 m-0 flex flex-col gap-4">
+                    <ul class="list-none p-3">
                       <li
                         v-for="link in links"
                         :key="link.name"
-                        class="links-item"
+                        class="links-item flex flex-col"
                       >
                         <router-link
                           class="text-2xl font-semibold text-primary hover:opacity-70"
@@ -144,8 +143,7 @@ watch(
 .sidebar-btn-icon .p-button-icon {
   color: red;
 }
-.header__nav {
-}
+
 .header__list {
   display: flex;
   justify-content: space-between;

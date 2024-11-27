@@ -1,7 +1,12 @@
-import { AxiosError } from "axios";
 import { defineStore } from "pinia";
-import type { User, ErrorType, State } from "../interfaces/userInterfaces";
-import axiosR from "../api/http";
+import { User, ErrorType, State } from "../interfaces/userInterfaces";
+import cookie from "cookiejs";
+import {
+  autoLoginService,
+  fetchUserService,
+  loginService,
+} from "../services/auth";
+import { handleError } from "../utils/errorUtil";
 
 export const useUserStore = defineStore("userStore", {
   state: (): State => ({
@@ -31,86 +36,38 @@ export const useUserStore = defineStore("userStore", {
   },
 
   actions: {
-    async fetchUser(): Promise<void> {
+    async fetchUser() {
       if (this.isAuthenticated) {
         try {
-          const { data } = await axiosR("/user");
+          const data = await fetchUserService();
           this.user = data;
-          console.log(data);
         } catch (err) {
-          console.error("Error fetching user:", err);
+          this.error = handleError(err, "Ошибка при получении пользователя");
         }
       }
     },
 
-    async login(data: User): Promise<void> {
+    async login(data: User) {
       try {
-        const res = await axiosR.post("/auth/login", data);
-        this.token = res.data.token;
-        this.user = { ...res.data };
-        localStorage.setItem("token", res.data.token);
+        const res = await loginService(data);
+        this.token = res.token;
+        localStorage.setItem("token", res.token);
+        this.user = { ...res };
         this.error = null;
-        console.log(res);
-      } catch (err: unknown) {
-        const error = err as AxiosError;
-        this.error = {
-          message:
-            typeof error.response?.data === "string"
-              ? error.response.data
-              : "Ошибка входа",
-          statusCode: error.response?.status,
-        };
+      } catch (err) {
+        this.error = handleError(err, "Ошибка при входе");
       }
     },
 
-    async autoLogin(): Promise<void> {
-      const token = localStorage.get("token");
-      if (typeof token === "string" && token.trim() !== "") {
-        this.token = token;
-        this.isAuthenticated = true;
+    async autoLogin() {
+      const token = cookie.get("token");
+      if (token) {
         try {
-          const res = await axiosR.post("/auth", { token });
-          this.user = { ...res.data };
+          const data = await autoLoginService(token);
+          this.user = { ...data };
         } catch (err) {
-          console.error("Ошибка при автологине:", err);
-          this.token = null;
-          this.isAuthenticated = false;
+          this.error = handleError(err, "Ошибка при автологине");
         }
-      } else {
-        console.warn("Некорректное значение токена:", token);
-        this.token = null;
-        this.isAuthenticated = false;
-      }
-    },
-
-    async registerUser(
-      data: User,
-      result: (statusCode: number) => void
-    ): Promise<void> {
-      try {
-        const res = await axiosR.post("/register", data);
-        console.log("Ответ сервера при регистрации:", res);
-
-        if (res.status === 201) {
-          this.token = res.data.token;
-          this.user = { ...res.data };
-          this.error = null;
-          localStorage.setItem("token", res.data.token);
-          result(201);
-        } else {
-          result(res.status);
-        }
-      } catch (err: unknown) {
-        const error = err as AxiosError;
-        this.error = {
-          message:
-            typeof error.response?.data === "string"
-              ? error.response.data
-              : "Ошибка регистрации",
-          statusCode: error.response?.status || 500,
-        };
-        console.error("Ошибка при регистрации:", this.error);
-        result(error.response?.status || 500);
       }
     },
   },
