@@ -45,6 +45,11 @@ const router = createRouter({
       component: () => import("../views/ShopPage.vue"),
       meta: { protected: true },
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      component: () => import("../views/NotFoundPage.vue"),
+    },
   ],
 });
 

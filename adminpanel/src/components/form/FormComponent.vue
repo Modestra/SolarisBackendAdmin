@@ -26,31 +26,8 @@
 
 <script setup>
 import InputText from "primevue/inputtext";
-import { computed, onMounted, reactive, ref } from "vue";
-import { useUserStore } from "../../stores/userStore";
-import { useRouter } from "vue-router";
-import axios from "axios";
-
-const router = useRouter();
-const userStore = useUserStore();
-
-const passwordVisible = ref(false);
-
-const formValue = reactive({
-  username: "",
-  password: "",
-});
-
-async function loginUser() {
-  try {
-    await userStore.login({ ...formValue });
-    if (localStorage.getItem("token")) {
-      router.push("/account");
-    }
-  } catch (err) {
-    console.error("Ошибка входа", err);
-  }
-}
+import { useAuth } from "../../composables/useAuth";
+const { passwordVisible, formValue, loginUser } = useAuth();
 </script>
 
 <style lang="scss" scoped>
