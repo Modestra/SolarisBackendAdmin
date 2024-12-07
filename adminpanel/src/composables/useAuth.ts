@@ -1,4 +1,3 @@
-// src/composables/useAuth.js
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/userStore";
