@@ -1,7 +1,7 @@
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/userStore";
-import { User } from "../interfaces/userInterfaces";
+import { User } from "../interfaces/user/userInterfaces";
 
 export function useAuth() {
   const userStore = useUserStore();

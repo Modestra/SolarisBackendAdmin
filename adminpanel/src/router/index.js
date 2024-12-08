@@ -46,6 +46,12 @@ const router = createRouter({
       meta: { protected: true },
     },
     {
+      path: "/users",
+      name: "users",
+      component: () => import("../views/UsersView.vue"),
+      meta: { protected: true },
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "404",
       component: () => import("../views/NotFoundPage.vue"),

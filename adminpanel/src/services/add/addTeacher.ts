@@ -1,5 +1,5 @@
-import axiosR from "../api/http";
-import { CreatedUser } from "../interfaces/createUser";
+import axiosR from "../../api/http";
+import { CreatedUser } from "../../interfaces/create/createUser";
 
 export async function addTeacherService(user: CreatedUser) {
   const res = await axiosR.post("/teacher/create_teacher", user, {

@@ -1,36 +1,51 @@
 import { useCreateUserStore } from "../stores/createUserStore";
-import { errors, userData, validateForm } from "./useValidate";
+import { toggleShowForm } from "./useShowUsers";
+import {
+  errors,
+  studentData,
+  teacherData,
+  userData,
+  validateForm,
+} from "./useValidate";
 
 export const createUser = useCreateUserStore();
 
 export async function handleSubmit() {
-  if (!validateForm()) {
-    console.log("Форма содержит ошибки:", errors);
-    return;
-  }
-
-  const actionMap: { [key: string]: (data: typeof userData) => Promise<void> } =
-    {
-      Ученик: createUser.addStudent,
-      Учитель: createUser.addTeacher,
-    };
-
-  const action = actionMap[userData.category];
-  if (action) {
+  if (validateForm()) {
     try {
-      await action({ ...userData });
-      // Сброс данных формы
-      Object.assign(userData, {
-        email: "",
-        username: "",
-        category: "",
-        class_name: "",
-        password: "",
-      });
+      await createUser.createUser({ ...userData });
+      toggleShowForm();
+      userData.email = "";
+      userData.username = "";
+      userData.password = "";
+      userData.category = "";
     } catch (error) {
       console.log("Ошибка при добавлении пользователя:", error);
     }
   } else {
-    console.log("Неизвестная категория пользователя:", userData.category);
+    console.log("Форма содержит ошибки:", errors);
+  }
+}
+
+export async function handleSumbitTeacher() {
+  if (validateForm()) {
+    try {
+      teacherData.userId = createUser.userId;
+      await createUser.addUser({ ...teacherData }, "teacher");
+      console.log("учитель создан", { ...teacherData });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+export async function handleSumbitStudent() {
+  if (validateForm()) {
+    try {
+      studentData.userId = createUser.userId;
+      await createUser.addUser({ ...studentData }, "student");
+      console.log("ученик создан", { ...studentData });
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

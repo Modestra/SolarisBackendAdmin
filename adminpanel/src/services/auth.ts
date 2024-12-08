@@ -1,5 +1,5 @@
 import axiosR from "../api/http";
-import { User } from "../interfaces/userInterfaces";
+import { User } from "../interfaces/user/userInterfaces";
 
 export async function fetchUserService(): Promise<User> {
   const { data } = await axiosR.get("/user");

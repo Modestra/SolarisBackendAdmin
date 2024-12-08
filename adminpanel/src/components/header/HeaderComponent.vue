@@ -56,7 +56,7 @@
                 </div>
               </template>
             </Sidebar>
-            <Button v-if="exitVisible" @click="visible = true">
+            <Button @click="visible = true">
               <i class="pi pi-bars"></i>
             </Button>
           </div>

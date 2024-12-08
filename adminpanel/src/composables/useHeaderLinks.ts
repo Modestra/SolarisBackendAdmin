@@ -1,4 +1,4 @@
-import { Links } from "../interfaces/headerInterfaces";
+import { Links } from "../interfaces/header/headerInterfaces";
 
 export function useLinks() {
   const links: Links[] = [
@@ -7,6 +7,7 @@ export function useLinks() {
     { name: "Конкурсы", path: "/competitions" },
     { name: "Сертификаты", path: "/certificates" },
     { name: "Почта", path: "/mail" },
+    { name: "Пользователи", path: "/users" },
   ];
 
   return { links };

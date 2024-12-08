@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-import { User, ErrorType, State } from "../interfaces/userInterfaces";
-import cookie from "cookiejs";
+import { User, ErrorType, State } from "../interfaces/user/userInterfaces";
 import {
   autoLoginService,
   fetchUserService,
@@ -53,6 +52,7 @@ export const useUserStore = defineStore("userStore", {
         this.token = res.token;
         localStorage.setItem("token", res.token);
         this.user = { ...res };
+
         this.error = null;
       } catch (err) {
         this.error = handleError(err, "Ошибка при входе");

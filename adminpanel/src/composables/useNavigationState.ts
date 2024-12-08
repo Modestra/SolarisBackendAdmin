@@ -8,9 +8,7 @@ export function useNavigationState() {
   const route = useRoute();
   const useUser = useUserStore();
 
-  // Функция для проверки состояния маршрута и авторизации
   function checkPath() {
-    // Показываем кнопку выхода, если не на странице авторизации и пользователь авторизован (есть токен)
     if (route.path !== "/auth" && useUser.token?.length) {
       exitVisible.value = true;
     } else {
@@ -18,7 +16,6 @@ export function useNavigationState() {
     }
   }
 
-  // Отслеживаем изменения маршрута
   watch(() => route.path, checkPath);
 
   function handleLinkClick() {
