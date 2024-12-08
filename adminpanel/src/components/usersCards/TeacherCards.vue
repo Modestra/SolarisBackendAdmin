@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper flex flex-col gap-4">
+  <div class="wrapper">
     <Card
       v-for="teacher in teachers"
       :key="teacher.userId"
@@ -74,3 +74,17 @@ onMounted(() => {
   userStore.fetchTeachers();
 });
 </script>
+
+<style scoped lang="scss">
+.wrapper{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  @media(max-width: 996px){
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media(max-width: 700px){
+    grid-template-columns: 1fr;
+  }
+}
+</style>
