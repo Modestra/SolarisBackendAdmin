@@ -38,10 +38,13 @@ export async function handleSumbitTeacher() {
     }
   }
 }
+
 export async function handleSumbitStudent() {
   if (validateForm()) {
     try {
       studentData.userId = createUser.userId;
+      studentData.teacherId = createUser.teacherId;
+
       await createUser.addUser({ ...studentData }, "student");
       console.log("ученик создан", { ...studentData });
     } catch (err) {

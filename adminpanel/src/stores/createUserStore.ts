@@ -11,6 +11,7 @@ export const useCreateUserStore = defineStore("createUserStore", {
     userData: [] as CreatedUser[],
     error: "",
     userId: "",
+    teacherId: "",
   }),
 
   getters: {
@@ -30,7 +31,8 @@ export const useCreateUserStore = defineStore("createUserStore", {
       let res = await addUserService(user);
       this.userData = res.data;
       this.userId = res.data.user_id;
-      console.log(this.userId);
+
+      console.log(this.userData);
     },
 
     async addUser(
@@ -41,9 +43,13 @@ export const useCreateUserStore = defineStore("createUserStore", {
       try {
         let res;
         if (userType === "teacher") {
-          res = await addTeacherService({ ...user, userId: this.userId });
+          res = await addTeacherService({
+            ...user,
+          });
         } else if (userType === "student") {
-          res = await addStudentService({ ...user, userId: this.userId });
+          res = await addStudentService({
+            ...user,
+          });
         }
         this.userData.push(res!.data);
       } catch (err: unknown) {

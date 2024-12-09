@@ -5,4 +5,5 @@ export interface CreatedTeacher {
   profeccion: string;
   competition_activities: string;
   userId: string;
+  teacherId: string;
 }

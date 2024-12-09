@@ -14,6 +14,7 @@ export const teacherData = reactive({
   profeccion: "",
   competition_activities: "",
   userId: "",
+  teacherId: "",
 });
 
 export const studentData = reactive({
@@ -21,6 +22,7 @@ export const studentData = reactive({
   surname: "",
   fathername: "",
   userId: "",
+  teacherId: "",
 });
 
 export const errors = reactive({

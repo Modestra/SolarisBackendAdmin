@@ -105,9 +105,6 @@
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 
-import { errors, teacherData, userData } from "../../composables/useValidate";
-import {
-  handleSubmit,
-  handleSumbitTeacher,
-} from "../../composables/useCreateUser";
+import { errors, teacherData } from "../../composables/useValidate";
+import { handleSumbitTeacher } from "../../composables/useCreateUser";
 </script>
