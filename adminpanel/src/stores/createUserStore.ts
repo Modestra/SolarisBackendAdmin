@@ -46,6 +46,7 @@ export const useCreateUserStore = defineStore("createUserStore", {
           res = await addTeacherService({
             ...user,
           });
+          this.teacherId = res.data.teacher_id;
         } else if (userType === "student") {
           res = await addStudentService({
             ...user,
