@@ -5,6 +5,8 @@ import { getTeachersService } from "../services/get/getTeachers";
 import { CreatedUser } from "../interfaces/create/createUser";
 import { CreatedTeacher } from "../interfaces/create/createTeacher";
 import { CreatedStudent } from "../interfaces/create/createStudent";
+import { deleteTeacherService } from "../services/delete/delete";
+import axiosR from "../api/http";
 
 export const useGetUserStore = defineStore("getUser", {
   state: () => ({
@@ -50,6 +52,18 @@ export const useGetUserStore = defineStore("getUser", {
         console.log(res.data);
       } catch (error) {
         console.error("Ошибка при загрузке учителей:", error);
+      }
+    },
+
+    async deleteTeacher(user_id: string) {
+      try {
+        if (!user_id) {
+          console.error("Ошибка: teacher_id не передан");
+          return;
+        }
+        const res = await deleteTeacherService(user_id);
+      } catch (err) {
+        console.error("Ошибка при удалении учителя:", err);
       }
     },
   },

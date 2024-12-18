@@ -8,7 +8,7 @@
     <div v-if="teacher">
       <p>
         Вы действительно хотите удалить пользователя {{ teacher.name }}
-        {{ teacher.surname }} {{teacher.fathername}}?
+        {{ teacher.surname }} {{ teacher.fathername }}?
       </p>
     </div>
     <div class="flex justify-end gap-2 mt-4">

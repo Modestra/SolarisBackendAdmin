@@ -2,7 +2,7 @@
   <div class="wrapper">
     <Card
       v-for="teacher in teachers"
-      :key="teacher.userId"
+      :key="teacher.user_id"
       class="relative p-4 w-full"
     >
       <template #title>
@@ -38,7 +38,6 @@
         :teacher="selectedItem"
         :visible="changeDialogVisible"
         @update:visible="closeDialogs"
-        @save="saveTeacher"
       />
       <DeleteUserModal
         :teacher="selectedItem"
@@ -58,8 +57,8 @@ import ChangeUserModal from "../modal/ChangeUserModal.vue";
 import DeleteUserModal from "../modal/DeleteUserModal.vue";
 import { useDialog } from "../../composables/useShowDialogs";
 
-const userStore = useGetUserStore();
-const teachers = computed(() => userStore.getTeachers);
+const userGetStore = useGetUserStore();
+const teachers = computed(() => userGetStore.getTeachers);
 
 const {
   selectedItem,
@@ -70,20 +69,33 @@ const {
   closeDialogs,
 } = useDialog();
 
+function deleteTeacher() {
+  if (selectedItem.value) {
+    userGetStore
+      .deleteTeacher(selectedItem.value.user_id)
+      .then(() => {
+        userGetStore.fetchTeachers();
+      })
+      .catch((err) => {
+        console.error("Ошибка при удалении пользователя:", err);
+      });
+  }
+}
+
 onMounted(() => {
-  userStore.fetchTeachers();
+  userGetStore.fetchTeachers();
 });
 </script>
 
 <style scoped lang="scss">
-.wrapper{
+.wrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  @media(max-width: 996px){
+  @media (max-width: 996px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media(max-width: 700px){
+  @media (max-width: 700px) {
     grid-template-columns: 1fr;
   }
 }
