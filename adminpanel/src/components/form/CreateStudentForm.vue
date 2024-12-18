@@ -52,19 +52,19 @@
             Классный руководитель
           </label>
           <select
-            v-model="studentData.teacherId"
+            v-model="studentData.teacher_id"
             class="cursor-pointer mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="" disabled>Выберите классного руководителя</option>
             <option
               v-for="teacher in teachers"
-              :key="teacher.teacherId"
-              :value="teacher.teacherId"
+              :key="teacher.teacher_id"
+              :value="teacher.teacher_id"
             >
               {{ teacher.name }} {{ teacher.surname }} {{ teacher.fathername }}
             </option>
           </select>
-          <p>Учитель {{ studentData.teacherId }}</p>
+          <p>Учитель {{ studentData.teacher_id }}</p>
         </div>
         <div class="my-4">
           <Button type="submit" class="w-full">Создать ученика</Button>
@@ -78,12 +78,13 @@
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 
-import { studentData } from "../../composables/useValidate";
 import { handleSumbitStudent } from "../../composables/useCreateUser";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, reactive, ref, watch } from "vue";
 import { useGetUserStore } from "../../stores/getUsersStore";
+import { studentData } from "../../composables/useValidate";
 
 const getUserStore = useGetUserStore();
+const teacherIdClone = ref();
 
 const teachers = computed(() => {
   return getUserStore.getTeachers;

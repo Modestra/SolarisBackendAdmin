@@ -31,8 +31,7 @@ export async function handleSumbitTeacher() {
   if (validateForm()) {
     try {
       teacherData.userId = createUser.userId;
-      await createUser.addUser({ ...teacherData }, "teacher");
-      console.log("учитель создан", { ...teacherData });
+      await createUser.addTeacher({ ...teacherData });
     } catch (err) {
       console.log(err);
     }
@@ -42,10 +41,8 @@ export async function handleSumbitTeacher() {
 export async function handleSumbitStudent() {
   if (validateForm()) {
     try {
-      studentData.userId = createUser.userId;
-      studentData.teacherId = createUser.teacherId;
-
-      await createUser.addUser({ ...studentData }, "student");
+      studentData.user_id = createUser.userId;
+      await createUser.addStudent({ ...studentData });
       console.log("ученик создан", { ...studentData });
     } catch (err) {
       console.log(err);

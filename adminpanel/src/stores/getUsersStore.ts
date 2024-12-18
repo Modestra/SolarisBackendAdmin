@@ -6,7 +6,6 @@ import { CreatedUser } from "../interfaces/create/createUser";
 import { CreatedTeacher } from "../interfaces/create/createTeacher";
 import { CreatedStudent } from "../interfaces/create/createStudent";
 import { deleteTeacherService } from "../services/delete/delete";
-import axiosR from "../api/http";
 
 export const useGetUserStore = defineStore("getUser", {
   state: () => ({
@@ -31,7 +30,7 @@ export const useGetUserStore = defineStore("getUser", {
       try {
         const res = await getUsersService();
         this.users = res.data;
-        console.log(res.data);
+        console.log("пользователи", res.data);
       } catch (error) {
         console.error("Ошибка при загрузке пользователей:", error);
       }
@@ -58,7 +57,7 @@ export const useGetUserStore = defineStore("getUser", {
     async deleteTeacher(user_id: string) {
       try {
         if (!user_id) {
-          console.error("Ошибка: teacher_id не передан");
+          console.error("Ошибка: user_id не передан");
           return;
         }
         const res = await deleteTeacherService(user_id);

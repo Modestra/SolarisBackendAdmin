@@ -3,8 +3,6 @@ import { CreatedUser } from "../interfaces/create/createUser";
 import { addTeacherService } from "../services/add/addTeacher";
 import { addStudentService } from "../services/add/addStudent";
 import { addUserService } from "../services/add/addUser";
-import { CreatedTeacher } from "../interfaces/create/createTeacher";
-import { CreatedStudent } from "../interfaces/create/createStudent";
 
 export const useCreateUserStore = defineStore("createUserStore", {
   state: () => ({
@@ -35,30 +33,38 @@ export const useCreateUserStore = defineStore("createUserStore", {
       console.log(this.userData);
     },
 
-    async addUser(
-      user: CreatedTeacher | CreatedStudent,
-      userType: "teacher" | "student"
-    ) {
+    async addTeacher(teacher) {
       this.error = "";
       try {
-        let res;
-        if (userType === "teacher") {
-          res = await addTeacherService({
-            ...user,
-          });
-          this.teacherId = res.data.teacher_id;
-        } else if (userType === "student") {
-          res = await addStudentService({
-            ...user,
-          });
-        }
-        this.userData.push(res!.data);
+        const res = await addTeacherService({ ...teacher });
+        this.teacherId = res.data.teacher_id;
+        this.userData = res.data;
+        console.log("Учитель успешно создан:", res.data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           this.error = err.message;
-          console.log(this.error);
+          console.error("Ошибка при создании учителя:", this.error);
         } else {
-          this.error = "Неизвестная ошибка при создании пользователя";
+          this.error = "Неизвестная ошибка при создании учителя";
+          console.error(this.error);
+        }
+      }
+    },
+
+    async addStudent(student) {
+      this.error = "";
+      try {
+        const res = await addStudentService({ ...student });
+        this.teacherId = res.data.teacher_id;
+        this.userData = res.data;
+        console.log("Ученик успешно создан:", res.data);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          this.error = err.message;
+          console.error("Ошибка при создании ученика:", this.error);
+        } else {
+          this.error = "Неизвестная ошибка при создании ученика";
+          console.error(this.error);
         }
       }
     },

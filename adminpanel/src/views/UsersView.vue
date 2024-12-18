@@ -16,12 +16,14 @@
       </form>
     </div>
     <TeacherCards v-if="selectedRole === 'teacher'" />
+    <StudentsCards v-if="selectedRole === 'student'" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import TeacherCards from "../components/usersCards/TeacherCards.vue";
+import StudentsCards from "../components/usersCards/StudentsCards.vue";
 
 const roles = [
   { value: "teacher", label: "Учитель" },

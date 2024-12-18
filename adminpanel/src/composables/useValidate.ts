@@ -21,8 +21,8 @@ export const studentData = reactive({
   name: "",
   surname: "",
   fathername: "",
-  userId: "",
-  teacherId: "",
+  user_id: "",
+  teacher_id: "",
 });
 
 export const errors = reactive({
