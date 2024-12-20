@@ -4,14 +4,15 @@
     modal
     header="Изменить пользователя"
     :style="{ width: '25rem' }"
+    close-icon="none"
   >
-    <div v-if="teacher" class="flex flex-col gap-4">
+    <div v-if="user" class="flex flex-col gap-4">
       <div class="flex items-center gap-4">
         <label for="username" class="font-semibold w-24">Имя</label>
         <InputText
           id="username"
           class="flex-auto"
-          v-model="teacher.name"
+          v-model="user.name"
           autocomplete="off"
         />
       </div>
@@ -20,7 +21,7 @@
         <InputText
           id="surname"
           class="flex-auto"
-          v-model="teacher.surname"
+          v-model="user.surname"
           autocomplete="off"
         />
       </div>
@@ -29,25 +30,25 @@
         <InputText
           id="fathername"
           class="flex-auto"
-          v-model="teacher.fathername"
+          v-model="user.fathername"
           autocomplete="off"
         />
       </div>
-      <div class="flex items-center gap-4">
+      <div v-if="props.type === 'teacher'" class="flex items-center gap-4">
         <label for="profeccion" class="font-semibold w-24">Профессия</label>
         <InputText
           id="profeccion"
           class="flex-auto"
-          v-model="teacher.profeccion"
+          v-model="user.profeccion"
           autocomplete="off"
         />
       </div>
-      <div class="flex items-center gap-4">
+      <div v-if="props.type === 'teacher'" class="flex items-center gap-4">
         <label for="activities" class="font-semibold w-24">Активности</label>
         <InputText
           id="activities"
           class="flex-auto"
-          v-model="teacher.competition_activities"
+          v-model="user.competition_activities"
           autocomplete="off"
         />
       </div>
@@ -70,13 +71,12 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import { defineProps, defineEmits, ref } from "vue";
 
-// Получаем пропсы
 const props = defineProps({
   visible: Boolean,
-  teacher: Object,
+  user: Object,
+  type: String,
 });
 
-// Эмитим события
 const emit = defineEmits(["update:visible", "save"]);
 
 function closeDialog() {
@@ -85,6 +85,5 @@ function closeDialog() {
 
 function saveTeacher() {
   emit("save", props.teacher);
-  closeDialog();
 }
 </script>

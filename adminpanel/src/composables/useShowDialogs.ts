@@ -7,6 +7,8 @@ export function useDialog<T>() {
 
   function openChangeDialog(item: T) {
     selectedItem.value = { ...item };
+    console.log(selectedItem.value);
+    
     changeDialogVisible.value = true;
   }
 

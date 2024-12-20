@@ -35,15 +35,18 @@
     </Card>
     <Teleport to="body">
       <ChangeUserModal
-        :teacher="selectedItem"
+        :user="selectedItem"
         :visible="changeDialogVisible"
         @update:visible="closeDialogs"
+        @save="changeTeacher"
+        type="teacher"
       />
       <DeleteUserModal
-        :teacher="selectedItem"
+        :user="selectedItem"
         :visible="deleteDialogVisible"
         @update:visible="closeDialogs"
         @delete="deleteTeacher"
+        type="teacher"
       />
     </Teleport>
   </div>
@@ -59,6 +62,7 @@ import { useDialog } from "../../composables/useShowDialogs";
 
 const userGetStore = useGetUserStore();
 const teachers = computed(() => userGetStore.getTeachers);
+const user = teachers;
 
 const {
   selectedItem,
@@ -70,16 +74,17 @@ const {
 } = useDialog();
 
 function deleteTeacher() {
-  if (selectedItem.value) {
-    userGetStore
-      .deleteTeacher(selectedItem.value.user_id)
-      .then(() => {
-        userGetStore.fetchTeachers();
-      })
-      .catch((err) => {
-        console.error("Ошибка при удалении пользователя:", err);
-      });
-  }
+  userGetStore.deleteTeacher(selectedItem.value.user_id).then(() => {
+    userGetStore.fetchTeachers();
+  });
+}
+function changeTeacher() {
+  userGetStore
+    .changeTeacher(selectedItem.value.teacher_id, selectedItem.value)
+    .then(() => {
+      userGetStore.fetchTeachers();
+      closeDialogs();
+    });
 }
 
 onMounted(() => {

@@ -5,8 +5,14 @@ import { getTeachersService } from "../services/get/getTeachers";
 import { CreatedUser } from "../interfaces/create/createUser";
 import { CreatedTeacher } from "../interfaces/create/createTeacher";
 import { CreatedStudent } from "../interfaces/create/createStudent";
-import { deleteTeacherService } from "../services/delete/delete";
-
+import {
+  deleteStudentService,
+  deleteTeacherService,
+} from "../services/delete/delete";
+import {
+  changeStudentService,
+  changeTeacherService,
+} from "../services/change/change";
 export const useGetUserStore = defineStore("getUser", {
   state: () => ({
     users: [] as CreatedUser[],
@@ -63,6 +69,33 @@ export const useGetUserStore = defineStore("getUser", {
         const res = await deleteTeacherService(user_id);
       } catch (err) {
         console.error("Ошибка при удалении учителя:", err);
+      }
+    },
+    async deleteStudent(user_id: string) {
+      try {
+        if (!user_id) {
+          console.error("Ошибка: user_id не передан");
+
+          return;
+        }
+        const res = await deleteStudentService(user_id);
+      } catch (err) {
+        console.error("Ошибка при удалении учителя:", err);
+      }
+    },
+    async changeTeacher(teacher_id: string, user: CreatedUser) {
+      try {
+        const res = await changeTeacherService(teacher_id, user);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async changeStudent(user_id: string, user: CreatedUser) {
+      try {
+        const res = await changeStudentService(user_id, user);
+      } catch (err) {
+        console.log(err);
       }
     },
   },

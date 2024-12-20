@@ -4,11 +4,12 @@
     modal
     header="Удалить пользователя"
     :style="{ width: '25rem' }"
+    close-icon="none"
   >
-    <div v-if="teacher">
+    <div v-if="user">
       <p>
-        Вы действительно хотите удалить пользователя {{ teacher.name }}
-        {{ teacher.surname }} {{ teacher.fathername }}?
+        Вы действительно хотите удалить пользователя {{ user.name }}
+        {{ user.surname }} {{ user.fathername }}?
       </p>
     </div>
     <div class="flex justify-end gap-2 mt-4">
@@ -34,8 +35,9 @@ import Button from "primevue/button";
 import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
-  teacher: Object,
+  user: Object,
   visible: Boolean,
+  type: String,
 });
 
 const emit = defineEmits(["update:visible", "delete"]);
