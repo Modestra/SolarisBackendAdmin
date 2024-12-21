@@ -11,7 +11,7 @@ export async function loginService(data: User) {
   return res.data;
 }
 
-export async function autoLoginService(token: string | true) {
-  const res = await axiosR.post("/auth", { token });
-  return res.data;
+export async function autoLoginService() {
+    const res = await axiosR.get("/user/current_user");
+    return res.data;
 }

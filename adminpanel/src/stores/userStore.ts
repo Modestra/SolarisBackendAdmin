@@ -54,7 +54,7 @@ export const useUserStore = defineStore("userStore", {
         this.token = res.token;
         localStorage.setItem("token", res.token);
         this.user = { ...res };
-
+        await this.autoLogin()
         this.error = null;
       } catch (err) {
         this.error = handleError(err, "Ошибка при входе");
@@ -62,14 +62,13 @@ export const useUserStore = defineStore("userStore", {
     },
 
     async autoLogin() {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const data = await autoLoginService(token);
-          this.user = { ...data };
-        } catch (err) {
-          this.error = handleError(err, "Ошибка при автологине");
+      try {
+        const data = await autoLoginService();
+        if (data) {
+          this.user =data?.user_id;
         }
+      } catch (err) {
+        this.error = handleError(err, "Ошибка при автологине");
       }
     },
   },

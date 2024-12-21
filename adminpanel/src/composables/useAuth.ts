@@ -16,6 +16,7 @@ export function useAuth() {
   const loginUser = async () => {
     try {
       await userStore.login({ ...formValue });
+    
       if (localStorage.getItem("token")) {
         router.push("/account");
       }
@@ -23,6 +24,7 @@ export function useAuth() {
       console.error("Ошибка входа", err);
     }
   };
+
   function logOut() {
     localStorage.removeItem("token");
     router.push("/auth");

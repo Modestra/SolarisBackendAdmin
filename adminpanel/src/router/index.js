@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import AuthorizationPage from "../views/AuthorizationPage.vue";
+import { useUserStore } from "../stores/userStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,9 +62,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
+  const user = useUserStore()
 
   if (to.matched.some((route) => route.meta.protected)) {
-    if (token) {
+    if (token && user.getUser?.is_admin) {
       next();
     } else {
       next("/auth");
@@ -74,3 +76,4 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
+

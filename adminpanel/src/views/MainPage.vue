@@ -17,7 +17,6 @@ const visible = ref(false);
 
 async function fetchData() {
   const { data } = await axiosR.get("/users");
-  console.log(data);
 }
 </script>
 =======
