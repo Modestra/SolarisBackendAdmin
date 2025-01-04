@@ -1,6 +1,4 @@
-<template>
-    Компанет главной страницы
-</template>
+<template>Компанет главной страницы</template>
 
 <script lang="js"></script>
 

@@ -18,12 +18,13 @@
 </template>
 
 <script setup>
-import InputText from "primevue/inputtext";
-import { reactive, ref } from "vue";
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import { reactive, ref } from 'vue';
 
-const name = ref("");
-const age = ref("");
-const classroom = ref("");
+const name = ref('');
+const age = ref('');
+const classroom = ref('');
 
 const payload = reactive({
   name: name.value,
@@ -45,7 +46,9 @@ const payload = reactive({
   -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
-
+.p-inputtext {
+  background-color: white;
+}
 .p-inputtext {
   &:hover:enabled,
   &:focus:enabled {
