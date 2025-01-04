@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <div class="mt-2 " v-if="user.length === 0">
+      <h2 class="text=3xl">Нет созданных учителей</h2>
+    </div>
     <Card
       v-for="teacher in teachers"
       :key="teacher.user_id"

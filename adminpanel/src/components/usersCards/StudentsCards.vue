@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <div class="mt-2" v-if="user.length === 0">
+      <h2 class="text=3xl">Нет созданных учеников</h2>
+    </div>
     <Card v-for="student in students" :key="student.userId" class="relative">
       <template #title>
         <div class="flex gap-2 relative p-4">

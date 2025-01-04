@@ -62,10 +62,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
-  const user = useUserStore()
+  const user = useUserStore();
 
   if (to.matched.some((route) => route.meta.protected)) {
-    if (token && user.getUser?.is_admin) {
+    if (token) {
       next();
     } else {
       next("/auth");
@@ -76,4 +76,3 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
-
