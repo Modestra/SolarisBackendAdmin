@@ -1,62 +1,75 @@
 import { defineStore } from "pinia";
-import axiosR from "../api/http";
-import type { IUserData } from "../interfaces/userInterface";
+import { User, ErrorType, State } from "../interfaces/user/userInterfaces";
+import {
+  autoLoginService,
+  fetchUserService,
+  loginService,
+} from "../services/auth";
+import { handleError } from "../utils/errorUtil";
+import { deleteTeacherService } from "../services/delete/delete";
+import { CreatedUser } from "../interfaces/create/createUser";
 
 export const useUserStore = defineStore("userStore", {
-  state: (): IUserData => ({
+  state: (): State => ({
     user: null,
     token: "",
-    error: false,
+    error: null,
     successRes: false,
+    isAuthenticated: false,
   }),
+
   getters: {
-    getUsers(state) {
+    getUser(state): User | null {
       return state.user;
     },
-    getToken(state) {
+    getToken(state): string | null {
       return state.token;
     },
-    getError(state) {
+    getError(state): ErrorType | null {
       return state.error;
     },
-    getSuccessRes(state) {
+    getRes(state): boolean {
       return state.successRes;
     },
+    isAuthenticated(state): boolean {
+      return !!state.token;
+    },
   },
+
   actions: {
-    async login(data: IUserData) {
+    async fetchUser() {
+      if (this.isAuthenticated) {
+        try {
+          const data = await fetchUserService();
+          this.user = data;
+        } catch (err) {
+          this.error = handleError(err, "Ошибка при получении пользователя");
+        }
+      }
+    },
+
+    async login(data: User) {
       try {
-        const res = await axiosR.post("/user", data);
-        this.token = res.data.token;
-        this.error = false;
-        this.user = res.data.user;
-        this.successRes = true;
-        localStorage.setItem("token", res.data.token);
-      } catch (error) {
-        this.error = true;
-        this.successRes = false;
-        console.error("Login error:", error);
+        const res = await loginService(data);
+        this.token = res.token;
+        localStorage.setItem("token", res.token);
+        this.user = { ...res };
+        await this.autoLogin()
+        this.error = null;
+      } catch (err) {
+        this.error = handleError(err, "Ошибка при входе");
       }
     },
-    autoLogin() {
-      const token = localStorage.getItem("token");
-      if (token) {
-        axiosR
-          .post(`/auth/auto-login`, { token: token })
-          .then((res) => {
-            this.user = res.data;
-          })
-          .catch(() => {
-            localStorage.removeItem("token");
-          });
+
+    async autoLogin() {
+      try {
+        const data = await autoLoginService();
+        if (data) {
+          this.user =data?.user_id;
+        }
+      } catch (err) {
+        this.error = handleError(err, "Ошибка при автологине");
       }
-    },
-    logout() {
-      this.token = "";
-      this.user = null;
-      this.error = false;
-      this.successRes = false;
-      localStorage.removeItem("token");
     },
   },
 });

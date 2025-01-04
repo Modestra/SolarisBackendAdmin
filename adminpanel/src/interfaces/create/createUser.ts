@@ -1,0 +1,8 @@
+export interface CreatedUser {
+  email: string;
+  password: string;
+  username: string;
+  category: string;
+  teacherId?: string;
+  userId?: string;
+}

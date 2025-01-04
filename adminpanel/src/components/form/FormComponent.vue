@@ -1,17 +1,24 @@
 <template>
-  <form @submit.prevent @click.enter action="#" class="form">
+  <form @submit.prevent="validateForm" @keyup.enter class="form">
     <div class="form__wrapper">
       <p class="form__text">Авторизация</p>
       <div class="form__fields">
         <div class="form__group">
-          <label for="name">Логин</label>
-          <InputText id="name" v-model:model-value="name" />
+          <label for="login">Логин</label>
+          <InputText id="login" v-model="formValue.username" />
         </div>
         <div class="form__group">
-          <label for="age">Пароль</label>
-          <InputText id="age" v-model:model-value="age" />
+          <label for="password">Пароль</label>
+          <InputText
+            :type="passwordVisible ? 'text' : 'password'"
+            id="password"
+            v-model="formValue.password"
+          />
+          <p @click="passwordVisible = !passwordVisible">
+            {{ passwordVisible ? "Скрыть" : "Показать" }}
+          </p>
         </div>
-        <Button @click="$router.push('/')">Войти</Button>
+        <Button type="submit" @click="loginUser">Войти</Button>
       </div>
     </div>
   </form>
@@ -19,17 +26,8 @@
 
 <script setup>
 import InputText from "primevue/inputtext";
-import { reactive, ref } from "vue";
-
-const name = ref("");
-const age = ref("");
-const classroom = ref("");
-
-const payload = reactive({
-  name: name.value,
-  age: age.value,
-  classroom: classroom.value,
-});
+import { useAuth } from "../../composables/useAuth";
+const { passwordVisible, formValue, loginUser } = useAuth();
 </script>
 
 <style lang="scss" scoped>
