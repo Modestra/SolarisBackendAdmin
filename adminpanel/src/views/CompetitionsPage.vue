@@ -1,0 +1,3 @@
+<tmeplate>
+    competitions
+</tmeplate>
