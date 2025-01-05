@@ -6,8 +6,6 @@ import {
   loginService,
 } from "../services/auth";
 import { handleError } from "../utils/errorUtil";
-import { deleteTeacherService } from "../services/delete/delete";
-import { CreatedUser } from "../interfaces/create/createUser";
 
 export const useUserStore = defineStore("userStore", {
   state: (): State => ({
