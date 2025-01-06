@@ -2,7 +2,7 @@
   <Dialog
     v-model:visible="props.visible"
     modal
-    header="Удалить пользователя"
+    :header="`Удалить ${type}`"
     :style="{ width: '25rem' }"
     close-icon="none"
   >
@@ -32,12 +32,19 @@
 <script setup lang="ts">
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, computed } from "vue";
 
 const props = defineProps({
   user: Object,
+  competition: Object,
   visible: Boolean,
   type: String,
+});
+
+const type = computed(() => {
+  if (props.type === "teacher") return "учителя";
+  if (props.type === "student") return "ученика";
+  if (props.type === "competition") return "конкурс";
 });
 
 const emit = defineEmits(["update:visible", "delete"]);

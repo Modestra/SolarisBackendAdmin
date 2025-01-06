@@ -54,13 +54,37 @@
             class="px-6 py-4 text-sm text-center text-gray-800 border border-gray-300"
           >
             <div class="flex gap-2">
-              <Button label="Редактировать" severity="info" />
-              <Button label="удалить" severity="danger" />
+              <Button
+                label="Редактировать"
+                severity="info"
+                @click="openChangeDialog(competition)"
+              />
+              <Button
+                label="Удалить"
+                severity="danger"
+                @click="openDeleteDialog(competition)"
+              />
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+    <Teleport to="body">
+      <ChangeModal
+        :competition="selectedItem"
+        :visible="changeDialogVisible"
+        @update:visible="closeDialogs"
+        @save="changeCompetition"
+        type="competition"
+      />
+      <DeleteModal
+        :competition="selectedItem"
+        :visible="deleteDialogVisible"
+        @update:visible="closeDialogs"
+        @delete="deleteCompetition"
+        type="competition"
+      />
+    </Teleport>
   </div>
 </template>
 
@@ -68,26 +92,30 @@
 import { computed, onMounted } from "vue";
 import { useCompetitionStore } from "../../stores/competitionStore";
 import Button from "primevue/button";
+import DeleteModal from "../modal/DeleteModal.vue";
+import ChangeModal from "../modal/ChangeModal.vue";
+import { useDialog } from "../../composables/useShowDialogs";
 
 const competitionStore = useCompetitionStore();
 const competitions = computed(() => {
   return competitionStore.getCompetition;
 });
+const {
+  selectedItem,
+  changeDialogVisible,
+  deleteDialogVisible,
+  openChangeDialog,
+  openDeleteDialog,
+  closeDialogs,
+} = useDialog();
+
+function deleteCompetition() {
+  competitionStore.deleteCompetition(selectedItem.value.competition_id).then(() => {
+    competitionStore.fetchCompetitions();
+  });;
+}
 
 onMounted(() => {
   competitionStore.fetchCompetitions();
 });
-
-// Функция редактирования конкурса
-const editCompetition = (index: number) => {
-  const competition = competitions.value[index];
-  console.log("Редактирование конкурса:", competition);
-  // Логика редактирования (например, открытие модального окна)
-};
-
-// Функция удаления конкурса
-const deleteCompetition = (index: number) => {
-  console.log("Удаление конкурса с номером:", index + 1);
-  competitionStore.deleteCompetition(index);
-};
 </script>

@@ -23,14 +23,14 @@
       </template>
     </Card>
     <Teleport to="body">
-      <ChangeUserModal
+      <ChangeModal
         :user="selectedItem"
         :visible="changeDialogVisible"
         @update:visible="closeDialogs"
         type="student"
         @save="changeStudent"
       />
-      <DeleteUserModal
+      <DeleteModal
         :user="selectedItem"
         :visible="deleteDialogVisible"
         @update:visible="closeDialogs"
@@ -46,8 +46,8 @@ import Card from "primevue/card";
 import { computed, onMounted } from "vue";
 import { useGetUserStore } from "../../stores/getUsersStore";
 import { useDialog } from "../../composables/useShowDialogs";
-import DeleteUserModal from "../modal/DeleteUserModal.vue";
-import ChangeUserModal from "../modal/ChangeUserModal.vue";
+import ChangeModal from "../modal/ChangeModal.vue";
+import DeleteModal from "../modal/DeleteModal.vue";
 
 const userStore = useGetUserStore();
 const students = computed(() => {

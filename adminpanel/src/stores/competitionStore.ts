@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import type { CompetitionFields } from "../interfaces/competition/competitionInterface";
 import { getCompetitionService } from "../services/get/getCompetition";
 import { addCompetitionService } from "../services/add/addCompetition";
+import { deleteCompetitionService } from "../services/delete/deleteCompetition";
 
 export const useCompetitionStore = defineStore("competitionStore", {
   state: () => ({
@@ -25,10 +26,19 @@ export const useCompetitionStore = defineStore("competitionStore", {
     async addCompetition(competition: CompetitionFields) {
       try {
         const res = await addCompetitionService(competition);
-        this.competition.push(res.data); 
+        this.competition.push(res.data);
         console.log("Competition added:", res.data);
       } catch (error) {
         console.error("Error adding competition:", error);
+      }
+    },
+    async deleteCompetition(id: string) {
+      try {
+        await deleteCompetitionService(id);
+        this.competition = this.competition.filter((comp) => comp.id !== id);
+        console.log(`Competition with ID ${id} deleted`);
+      } catch (error) {
+        console.error("Error deleting competition:", error);
       }
     },
   },
