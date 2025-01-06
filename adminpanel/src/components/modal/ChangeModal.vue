@@ -9,7 +9,7 @@
     <div v-if="user" class="flex flex-col gap-4">
       <div
         class="flex flex-col gap-4"
-        v-if="props.type === 'teacher' || 'student'"
+        v-if="props.type === 'teacher' || props.type === 'student'"
       >
         <div class="flex items-center gap-4">
           <label for="username" class="font-semibold w-24">Имя</label>
@@ -57,34 +57,41 @@
           />
         </div>
       </div>
-      <div v-if="props.type === 'competition'">
-        <div class="flex items-center gap-4">
-          <label for="username" class="font-semibold w-24">Имя</label>
-          <InputText
-            id="competitionTitle"
-            class="flex-auto"
-            v-model="competitionFields.title"
-            autocomplete="off"
-          />
-        </div>
-        <div class="flex items-center gap-4">
-          <label for="username" class="font-semibold w-24">Имя</label>
-          <InputText
-            id="competitionTitle"
-            class="flex-auto"
-            v-model="competitionFields.description"
-            autocomplete="off"
-          />
-        </div>
-        <div class="flex items-center gap-4">
-          <label for="username" class="font-semibold w-24">Имя</label>
-          <InputText
-            id="competitionTitle"
-            class="flex-auto"
-            v-model="competitionFields.task_competitions"
-            autocomplete="off"
-          />
-        </div>
+    </div>
+    <div class="flex flex-col gap-4" v-if="props.type === 'competition'">
+      <div class="flex items-center gap-4">
+        <label for="competitionTitle" class="font-semibold w-24"
+          >Название</label
+        >
+        <InputText
+          id="competitionTitle"
+          class="flex-auto"
+          v-model="competition!.title"
+          autocomplete="true"
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <label for="competitionDescription" class="font-semibold w-24"
+          >Описание</label
+        >
+        <Textarea
+          v-model="competition!.description"
+          id="description"
+          rows="2"
+          cols="30"
+          placeholder="Введите описание конкурса"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          style="resize: none"
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <label for="competitionTask" class="font-semibold w-24">Задача</label>
+        <InputText
+          id="competitionTask"
+          class="flex-auto"
+          v-model="competition!.task_competitions"
+          autocomplete="off"
+        />
       </div>
     </div>
     <div class="flex justify-end gap-2 mt-4">
@@ -104,8 +111,8 @@
 import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
-import { defineProps, defineEmits, ref, computed } from "vue";
-import { competitionFields } from "../../composables/useCompetition";
+import { defineProps, defineEmits, computed } from "vue";
+import Textarea from "primevue/textarea";
 
 const props = defineProps({
   visible: Boolean,
@@ -129,5 +136,4 @@ function closeDialog() {
 function saveTeacher() {
   emit("save");
 }
-
 </script>

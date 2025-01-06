@@ -3,6 +3,7 @@ import type { CompetitionFields } from "../interfaces/competition/competitionInt
 import { getCompetitionService } from "../services/get/getCompetition";
 import { addCompetitionService } from "../services/add/addCompetition";
 import { deleteCompetitionService } from "../services/delete/deleteCompetition";
+import { changeCompetitionService } from "../services/change/changeCompetition";
 
 export const useCompetitionStore = defineStore("competitionStore", {
   state: () => ({
@@ -37,6 +38,17 @@ export const useCompetitionStore = defineStore("competitionStore", {
         await deleteCompetitionService(id);
         this.competition = this.competition.filter((comp) => comp.id !== id);
         console.log(`Competition with ID ${id} deleted`);
+      } catch (error) {
+        console.error("Error deleting competition:", error);
+      }
+    },
+    
+    async changeCompetition(
+      competition_id: string,
+      competition: CompetitionFields
+    ) {
+      try {
+        await changeCompetitionService(competition_id, competition);
       } catch (error) {
         console.error("Error deleting competition:", error);
       }

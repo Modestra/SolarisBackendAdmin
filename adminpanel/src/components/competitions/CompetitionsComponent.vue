@@ -100,6 +100,7 @@ const competitionStore = useCompetitionStore();
 const competitions = computed(() => {
   return competitionStore.getCompetition;
 });
+
 const {
   selectedItem,
   changeDialogVisible,
@@ -110,9 +111,19 @@ const {
 } = useDialog();
 
 function deleteCompetition() {
-  competitionStore.deleteCompetition(selectedItem.value.competition_id).then(() => {
-    competitionStore.fetchCompetitions();
-  });;
+  competitionStore
+    .deleteCompetition(selectedItem.value.competition_id)
+    .then(() => {
+      competitionStore.fetchCompetitions();
+    });
+}
+function changeCompetition() {
+  competitionStore
+    .changeCompetition(selectedItem.value.competition_id, selectedItem.value)
+    .then(() => {
+      competitionStore.fetchCompetitions();
+      closeDialogs();
+    });
 }
 
 onMounted(() => {

@@ -27,8 +27,8 @@
         :user="selectedItem"
         :visible="changeDialogVisible"
         @update:visible="closeDialogs"
-        type="student"
         @save="changeStudent"
+        type="student"
       />
       <DeleteModal
         :user="selectedItem"
