@@ -10,7 +10,7 @@ import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import { createPinia } from 'pinia';
-import UserService from './services/userService';
+import UserService from './core/services/UserService';
 
 const pinia = createPinia();
 const app = createApp(App);
