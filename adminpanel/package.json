@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build:tsc": "vue-tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "jest"
   },
@@ -25,9 +26,9 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
+    "postcss": "^8.4.49",
     "sass-embedded": "^1.80.3",
-    "tailwindcss": "^3.4.14",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
     "vue-tsc": "^2.0.29"

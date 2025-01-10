@@ -15,7 +15,7 @@
             v-model="formValue.password"
           />
           <p @click="passwordVisible = !passwordVisible">
-            {{ passwordVisible ? "Скрыть" : "Показать" }}
+            {{ passwordVisible ? 'Скрыть' : 'Показать' }}
           </p>
         </div>
         <Button type="submit" @click="loginUser">Войти</Button>
@@ -25,8 +25,8 @@
 </template>
 
 <script setup>
-import InputText from "primevue/inputtext";
-import { useAuth } from "../../composables/useAuth";
+import InputText from 'primevue/inputtext';
+import { useAuth } from '../../composables/useAuth';
 const { passwordVisible, formValue, loginUser } = useAuth();
 </script>
 
@@ -43,7 +43,9 @@ const { passwordVisible, formValue, loginUser } = useAuth();
   -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
-
+.p-inputtext {
+  background-color: white;
+}
 .p-inputtext {
   &:hover:enabled,
   &:focus:enabled {
