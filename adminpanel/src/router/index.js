@@ -65,7 +65,7 @@ router.beforeEach((to, from, next) => {
   const user = useUserStore();
 
   if (to.matched.some((route) => route.meta.protected)) {
-    if (token && user.getUser?.is_admin) {
+    if (token && user.admin) { //Не соответствую геттеры и сеттеры
       next();
     } else {
       next('/auth');

@@ -1,5 +1,6 @@
 export interface FormModel {
     label: string,
+    key: string,
     value: string | boolean | number,
     type: string,
     required: boolean,

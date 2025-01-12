@@ -11,14 +11,31 @@
 import FormComponent from '../../../core/components/FormComponent.vue';
 import Button from 'primevue/button';
 import { FormModel } from '../../../core/interfaces/formtypes';
-import { ref, Ref } from 'vue';
+import { inject, ref, Ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useUserStore } from '../../../stores/userStore';
+
+const userService : any = inject("UserService")
+const router = useRouter()
+const user = useUserStore()
 
 const AuthGroup: Ref<FormModel[]> = ref([
-  { label: 'Логин', value: '', type: 'text', required: true },
-  { label: 'Пароль', value: '', type: 'password', required: true },
+  { label: 'Логин', key: 'username', value: '', type: 'text', required: true },
+  { label: 'Пароль', key: 'password', value: '', type: 'password', required: true },
 ]);
 
-function toRegister() {}
+function toRegister() {
+  const authFields = {
+    username: AuthGroup.value[0].value,
+    password: AuthGroup.value[1].value
+  } 
+  userService.loginAdmin(authFields).then((resp: any)=>{
+    user.setUser(resp)
+    router.push("/")
+  }).catch((err: any)=>{
+    console.log(err)
+  })
+}
 </script>
 
 <style>
