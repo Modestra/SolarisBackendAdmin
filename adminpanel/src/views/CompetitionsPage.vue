@@ -1,3 +1,1 @@
-<tmeplate>
-    competitions
-</tmeplate>
+<template></template>

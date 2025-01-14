@@ -10,6 +10,7 @@ import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import { createPinia } from 'pinia';
+import UserService from './core/services/UserService';
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -19,6 +20,7 @@ app.use(PrimeVue, {
   },
 });
 
-app.use(router).use(pinia).use(ToastService).use(ConfirmationService);
-
+app.use(router).use(pinia);
+app.use(ToastService).use(ConfirmationService);
+app.use(UserService); //Самописные плагины
 app.mount('#app');

@@ -1,4 +1,4 @@
-import axiosR from "../../api/http";
+import axiosR from "../../core/api/http";
 
 export async function getTeachersService() {
   const res = await axiosR.get("/teacher", {
