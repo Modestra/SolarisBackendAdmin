@@ -1,4 +1,4 @@
-import axiosR from "../api/http";
+import axiosR from "../core/api/http";
 import { User } from "../interfaces/user/userInterfaces";
 
 export async function fetchUserService(): Promise<User> {
@@ -12,6 +12,6 @@ export async function loginService(data: User) {
 }
 
 export async function autoLoginService() {
-    const res = await axiosR.get("/user/current_user");
-    return res.data;
+  const res = await axiosR.get("/user/current_user");
+  return res.data;
 }

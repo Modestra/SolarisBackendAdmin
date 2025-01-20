@@ -33,7 +33,7 @@ export const useCreateUserStore = defineStore("createUserStore", {
       console.log(this.userData);
     },
 
-    async addTeacher(teacher) {
+    async addTeacher(teacher: any) {
       this.error = "";
       try {
         const res = await addTeacherService({ ...teacher });
@@ -51,7 +51,7 @@ export const useCreateUserStore = defineStore("createUserStore", {
       }
     },
 
-    async addStudent(student) {
+    async addStudent(student: any) {
       this.error = "";
       try {
         const res = await addStudentService({ ...student });

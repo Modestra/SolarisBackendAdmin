@@ -9,14 +9,14 @@
 </template>
 
 <script setup>
-import Button from "primevue/button";
-import { ref } from "vue";
-import axiosR from "../api/http";
+import Button from 'primevue/button';
+import { ref } from 'vue';
+import axiosR from '../core/api/http';
 
 const visible = ref(false);
 
 async function fetchData() {
-  const { data } = await axiosR.get("/users");
+  const { data } = await axiosR.get('/users');
 }
 </script>
 =======
