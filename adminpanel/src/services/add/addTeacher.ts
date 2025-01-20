@@ -1,4 +1,4 @@
-import axiosR from "../../api/http";
+import axiosR from "../../core/api/http";
 import { CreatedUser } from "../../interfaces/create/createUser";
 
 export async function addTeacherService(user: CreatedUser) {
