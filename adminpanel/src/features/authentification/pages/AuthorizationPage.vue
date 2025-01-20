@@ -15,26 +15,37 @@ import { inject, ref, Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '../../../stores/userStore';
 
-const userService : any = inject("UserService")
-const router = useRouter()
-const user = useUserStore()
+const userService: any = inject('UserService');
+const router = useRouter();
+const user = useUserStore();
 
 const AuthGroup: Ref<FormModel[]> = ref([
   { label: 'Логин', key: 'username', value: '', type: 'text', required: true },
-  { label: 'Пароль', key: 'password', value: '', type: 'password', required: true },
+  {
+    label: 'Пароль',
+    key: 'password',
+    value: '',
+    type: 'password',
+    required: true,
+  },
 ]);
 
 function toRegister() {
   const authFields = {
     username: AuthGroup.value[0].value,
-    password: AuthGroup.value[1].value
-  } 
-  userService.loginAdmin(authFields).then((resp: any)=>{
-    user.setUser(resp)
-    router.push("/")
-  }).catch((err: any)=>{
-    console.log(err)
-  })
+    password: AuthGroup.value[1].value,
+  };
+  console.log(authFields);
+  userService
+    .loginAdmin(authFields)
+    .then((resp: any) => {
+      localStorage.setItem('token', resp.data.token);
+      user.setUser(resp);
+      router.push('/');
+    })
+    .catch((err: any) => {
+      console.log(err);
+    });
 }
 </script>
 
