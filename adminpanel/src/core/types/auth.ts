@@ -1,4 +1,4 @@
 export interface AuthModel {
-    login: string,
+    username: string,
     password: string
 }
