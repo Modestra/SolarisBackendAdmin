@@ -6,8 +6,6 @@ import CreateUserForm from '../components/form/CreateUserForm.vue';
 import { showStudentForm, showTeacherForm } from '../composables/useShowUsers';
 
 const userService: any = inject('userService');
-
-userService.getCurrentUser(); // Выводим функцию
 </script>
 
 <template>
@@ -15,3 +13,5 @@ userService.getCurrentUser(); // Выводим функцию
   <CreateTeacherForm v-if="showTeacherForm" />
   <CreateStudentForm v-if="showStudentForm" />
 </template>
+
+<style></style>
