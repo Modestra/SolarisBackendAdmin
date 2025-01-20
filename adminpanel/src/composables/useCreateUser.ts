@@ -1,5 +1,10 @@
+import { ref } from "vue";
 import { useCreateUserStore } from "../stores/createUserStore";
-import { toggleShowForm } from "./useShowUsers";
+import {
+  showStudentForm,
+  showTeacherForm,
+  toggleShowForm,
+} from "./useShowUsers";
 import {
   errors,
   studentData,
@@ -7,8 +12,20 @@ import {
   userData,
   validateForm,
 } from "./useValidate";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 export const createUser = useCreateUserStore();
+export const isCreated = ref(false);
+
+export function clearAddedUserState() {
+  isCreated.value = false;
+  showTeacherForm.value = false;
+  showStudentForm.value = false;
+
+  router.push("/account");
+}
 
 export async function handleSubmit() {
   if (validateForm()) {
@@ -32,6 +49,12 @@ export async function handleSumbitTeacher() {
     try {
       teacherData.userId = createUser.userId;
       await createUser.addTeacher({ ...teacherData });
+      isCreated.value = true;
+      teacherData.competition_activities = "";
+      teacherData.fathername = "";
+      teacherData.name = "";
+      teacherData.profeccion = "";
+      teacherData.surname = "";
     } catch (err) {
       console.log(err);
     }
@@ -43,7 +66,10 @@ export async function handleSumbitStudent() {
     try {
       studentData.user_id = createUser.userId;
       await createUser.addStudent({ ...studentData });
-      console.log("ученик создан", { ...studentData });
+      isCreated.value = true;
+      studentData.fathername = "";
+      studentData.name = "";
+      studentData.surname = "";
     } catch (err) {
       console.log(err);
     }

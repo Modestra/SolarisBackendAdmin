@@ -1,5 +1,13 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div v-if="isCreated" class="w-full mt-5">
+    <h2 class="text-5xl text-center">Пользователь успешно создан</h2>
+    <div>
+      <Button class="mx-auto" @click="clearAddedUserState"
+        >К созданию пользователя</Button
+      >
+    </div>
+  </div>
+  <div v-else class="min-h-screen flex items-center justify-center bg-gray-100">
     <form
       @submit.prevent="handleSumbitTeacher"
       class="bg-white shadow-md rounded-lg p-4 w-full max-w-md space-y-6"
@@ -106,5 +114,9 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 
 import { errors, teacherData } from "../../composables/useValidate";
-import { handleSumbitTeacher } from "../../composables/useCreateUser";
+import {
+  clearAddedUserState,
+  handleSumbitTeacher,
+  isCreated,
+} from "../../composables/useCreateUser";
 </script>

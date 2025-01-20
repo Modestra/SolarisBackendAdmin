@@ -1,5 +1,13 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div v-if="isCreated" class="w-full mt-5">
+    <h2 class="text-5xl text-center">Пользователь успешно создан</h2>
+    <div>
+      <Button class="mx-auto bg-orange-500" @click="clearAddedUserState"
+        >К созданию пользователя</Button
+      >
+    </div>
+  </div>
+  <div v-else class="min-h-screen flex items-center justify-center bg-gray-100">
     <form
       @submit.prevent="handleSumbitStudent"
       class="bg-white shadow-md rounded-lg p-4 w-full max-w-md space-y-6"
@@ -64,7 +72,6 @@
               {{ teacher.name }} {{ teacher.surname }} {{ teacher.fathername }}
             </option>
           </select>
-          <p>Учитель {{ studentData.teacher_id }}</p>
         </div>
         <div class="my-4">
           <Button type="submit" class="w-full">Создать ученика</Button>
@@ -78,13 +85,16 @@
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 
-import { handleSumbitStudent } from "../../composables/useCreateUser";
+import {
+  clearAddedUserState,
+  handleSumbitStudent,
+  isCreated,
+} from "../../composables/useCreateUser";
 import { computed, onMounted, reactive, ref, watch } from "vue";
 import { useGetUserStore } from "../../stores/getUsersStore";
 import { studentData } from "../../composables/useValidate";
 
 const getUserStore = useGetUserStore();
-const teacherIdClone = ref();
 
 const teachers = computed(() => {
   return getUserStore.getTeachers;
