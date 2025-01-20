@@ -16,7 +16,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      "@api/*": ["/src/core/api/*"],
+      "@components/*": ["/src/core/components/*"],
+      "@services/core/*": ["/src/core/services/*"],
+      "@services/*": ["/src/services/*"]
+    }
   },
   "include": ["vite.config.ts"]
 }
