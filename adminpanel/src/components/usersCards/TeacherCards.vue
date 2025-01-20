@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <div class="mt-2" v-if="user.length === 0">
+      <h2 class="text=3xl">Нет созданных учителей</h2>
+    </div>
     <Card
       v-for="teacher in teachers"
       :key="teacher.user_id"
@@ -34,14 +37,14 @@
       </template>
     </Card>
     <Teleport to="body">
-      <ChangeUserModal
+      <ChangeModal
         :user="selectedItem"
         :visible="changeDialogVisible"
         @update:visible="closeDialogs"
         @save="changeTeacher"
         type="teacher"
       />
-      <DeleteUserModal
+      <DeleteModal
         :user="selectedItem"
         :visible="deleteDialogVisible"
         @update:visible="closeDialogs"
@@ -56,9 +59,9 @@
 import Card from "primevue/card";
 import { computed, onMounted } from "vue";
 import { useGetUserStore } from "../../stores/getUsersStore";
-import ChangeUserModal from "../modal/ChangeUserModal.vue";
-import DeleteUserModal from "../modal/DeleteUserModal.vue";
 import { useDialog } from "../../composables/useShowDialogs";
+import ChangeModal from "../modal/ChangeModal.vue";
+import DeleteModal from "../modal/DeleteModal.vue";
 
 const userGetStore = useGetUserStore();
 const teachers = computed(() => userGetStore.getTeachers);

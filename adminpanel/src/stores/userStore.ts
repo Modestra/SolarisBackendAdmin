@@ -1,4 +1,11 @@
 import { defineStore } from "pinia";
+import { User, ErrorType, State } from "../interfaces/user/userInterfaces";
+import {
+  autoLoginService,
+  fetchUserService,
+  loginService,
+} from "../services/auth";
+import { handleError } from "../utils/errorUtil";
 import { AuthorisedUser } from "../interfaces/user/userInterfaces";
 
 export const useUserStore = defineStore("userStore", {

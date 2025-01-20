@@ -1,15 +1,13 @@
 import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
-import { useUserStore } from "../stores/userStore";
+import { useRoute, useRouter } from "vue-router";
 
 export function useNavigationState() {
   const visible = ref(false);
   const exitVisible = ref(false);
   const route = useRoute();
-  const useUser = useUserStore();
 
   function checkPath() {
-    if (route.path !== "/auth" && useUser.token?.length) {
+    if (localStorage.getItem("token")) {
       exitVisible.value = true;
     } else {
       exitVisible.value = false;
@@ -26,6 +24,6 @@ export function useNavigationState() {
     visible,
     exitVisible,
     handleLinkClick,
-    checkPath, // Позволяет вручную вызвать checkPath
+    checkPath,
   };
 }
