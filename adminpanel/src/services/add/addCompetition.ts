@@ -1,4 +1,4 @@
-import axiosR from "../../api/http";
+import axiosR from "../../core/api/http";
 import { CompetitionFields } from "../../interfaces/competition/competitionInterface";
 
 export async function addCompetitionService(competition: CompetitionFields) {

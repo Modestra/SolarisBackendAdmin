@@ -1,4 +1,4 @@
-import axiosR from "../../api/http";
+import axiosR from "../../core/api/http";
 
 export async function deleteCompetitionService(competition_id: string) {
   const res = axiosR.delete(
