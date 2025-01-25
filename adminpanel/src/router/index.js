@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/MainPage.vue'),
+      component: () => import('../features/main-page-info/pages/MainPage.vue'),
       meta: { protected: true },
     },
     {
