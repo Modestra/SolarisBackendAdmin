@@ -1,13 +1,17 @@
 <template>
-  <HeaderComponent></HeaderComponent>
-  <main class="w-full flex justify-center">
-    <RouterView></RouterView>
-  </main>
+  <div class="catalog w-[520px] border-2 rounded-md border-second">
+    <h3>Здравствуйте, уважаемый пользователь</h3>
+    <p>С чего начнём?</p>
+    <div class="catalog__block mt-3">
+      <div class="catalog__segment rounded-md pl-2 w-full bg-second-2">
+        Создание пользователя
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { Catalog } from '../services/catalog';
-import HeaderComponent from '../../../core/components';
 const catalogs: Catalog[] = [
   {
     name: 'Создание пользователя',

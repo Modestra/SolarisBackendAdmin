@@ -1,7 +1,5 @@
 <template>
-  <slot/>
+  <slot />
 </template>
 
-<script setup>
-import HeaderComponent from "../components/header/HeaderComponent.vue";
-</script>
+<script setup></script>
