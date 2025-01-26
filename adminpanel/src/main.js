@@ -12,6 +12,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import { createPinia } from 'pinia';
 import UserService from './core/services/UserService';
 import { definePreset } from '@primevue/themes';
+import TableService from './core/services/TableService';
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -30,6 +31,7 @@ const CustomPreset = definePreset(Aura, {
       900: '{orange.900}',
       950: '{orange.950}',
     },
+
     colorScheme: {
       light: {
         primary: {
@@ -38,13 +40,41 @@ const CustomPreset = definePreset(Aura, {
           hoverColor: '{orange.900}',
           activeColor: '{orange.800}',
         },
+        surface: {
+          0: '#ffffff',
+          50: '{zinc.50}',
+          100: '{zinc.100}',
+          200: '{zinc.200}',
+          300: '{zinc.300}',
+          400: '{zinc.400}',
+          500: '{zinc.500}',
+          600: '{zinc.600}',
+          700: '{zinc.700}',
+          800: '{zinc.800}',
+          900: '{zinc.900}',
+          950: '{zinc.950}',
+        },
       },
       dark: {
         primary: {
           color: '{orange.500}',
           inverseColor: '#ffffff',
-          hoverColor: '{orange.900}',
+          hoverColor: '{orange.600}',
           activeColor: '{orange.800}',
+        },
+        surface: {
+          0: '#ffffff',
+          50: '{zinc.50}',
+          100: '{zinc.100}',
+          200: '{zinc.200}',
+          300: '{zinc.300}',
+          400: '{zinc.400}',
+          500: '{zinc.500}',
+          600: '{zinc.600}',
+          700: '{zinc.700}',
+          800: '{zinc.800}',
+          900: '{zinc.900}',
+          950: '{zinc.950}',
         },
       },
     },
@@ -61,5 +91,5 @@ app.use(PrimeVue, {
 
 app.use(router).use(pinia);
 app.use(ToastService).use(ConfirmationService);
-app.use(UserService); //Самописные плагины
+app.use(UserService).use(TableService); //Самописные плагины
 app.mount('#app');

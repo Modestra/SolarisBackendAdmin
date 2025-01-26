@@ -33,7 +33,8 @@ const router = createRouter({
         {
           path: '/competitions',
           name: 'competitions',
-          component: () => import('../views/CompetitionsPage.vue'),
+          component: () =>
+            import('../features/competitions/pages/CompetitionsPage.vue'),
           meta: { protected: true },
         },
         {

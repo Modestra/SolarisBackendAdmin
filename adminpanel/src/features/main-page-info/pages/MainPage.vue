@@ -1,6 +1,6 @@
 <template>
   <HeaderComponent></HeaderComponent>
-  <main class="w-full flex justify-center">
+  <main class="w-full flex">
     <RouterView></RouterView>
   </main>
 </template>

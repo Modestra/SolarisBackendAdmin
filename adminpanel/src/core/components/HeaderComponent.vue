@@ -7,7 +7,22 @@
             <span>Modestra</span>
           </div>
         </template>
-        <template #footer> </template>
+        <div class="nav-routers">
+          <RouterLink to="/users">Пользователи</RouterLink>
+          <RouterLink to="/competitions">Конкурсы</RouterLink>
+          <RouterLink to="/certificates">Сертификаты</RouterLink>
+          <RouterLink to="/mail">Почта</RouterLink>
+          <RouterLink to="/shop">Сертификаты</RouterLink>
+        </div>
+        <template #footer>
+          <Button
+            label="Выйти из аккаунта"
+            icon="pi pi-user"
+            class="flex-auto"
+            @click="outFromAccount"
+            outlined
+          ></Button>
+        </template>
       </Drawer>
       <Button icon="pi pi-bars" @click="visible = true" />
     </template>
@@ -20,41 +35,24 @@ import Drawer from 'primevue/drawer';
 import Button from 'primevue/button';
 import { ref } from 'vue';
 const visible = ref(false);
+
+const outFromAccount = () => {
+  localStorage.setItem('token', '');
+};
 </script>
 
 <style scoped lang="scss">
-.header {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 10px;
-  background-color: #1f2a3e;
-  -webkit-box-shadow: 0px 10px 8px 0px rgba(34, 60, 80, 0.2);
-  -moz-box-shadow: 0px 10px 8px 0px rgba(34, 60, 80, 0.2);
-  box-shadow: 0px 10px 8px 0px rgba(34, 60, 80, 0.2);
+.p-toolbar {
+  background: #1f2a3e;
+  border-radius: 0px;
 }
-.p-button:enabled {
-  background-color: #1f2a3e;
-  border: none;
-
-  &:hover {
-    background-color: #1f2a3e;
-    border: none;
-  }
+.p-drawer {
+  background: #1f2a3e;
+  color: black;
 }
-
-.sidebar-btn.p-button {
-  background-color: #fff !important;
-}
-.sidebar-btn-icon .p-button-icon {
-  color: red;
-}
-
-.header__list {
+.nav-routers {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  list-style-type: none;
-}
-.header__list-item {
+  flex-direction: column;
+  gap: 8px;
 }
 </style>
