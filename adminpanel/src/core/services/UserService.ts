@@ -12,7 +12,12 @@ export default {
 
 class UserService {
     private _axiosR = axiosR;
+
     public loginAdmin(data: AuthModel) {
         return this._axiosR.post("/auth/login", data)
+    }
+
+    public getListUsers(){
+        return this._axiosR.get("/user")
     }
 }

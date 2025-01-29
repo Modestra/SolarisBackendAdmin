@@ -1,6 +1,6 @@
 <template>
   <HeaderComponent></HeaderComponent>
-  <main class="w-full flex">
+  <main class="w-full flex mt-4">
     <RouterView></RouterView>
   </main>
 </template>
@@ -24,7 +24,7 @@ const catalogs: Catalog[] = [
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   height: 100vh;
 }
@@ -43,5 +43,9 @@ main {
     align-items: center;
     height: 36px;
   }
+}
+
+.p-datatable{
+  background: white;
 }
 </style>

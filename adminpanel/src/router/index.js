@@ -52,7 +52,7 @@ const router = createRouter({
         {
           path: '/users',
           name: 'users',
-          component: () => import('../views/UsersView.vue'),
+          component: () => import('../features/user-admin/pages/UserAdminPage.vue'),
           meta: { protected: true },
         },
         {
