@@ -27,7 +27,8 @@ const router = createRouter({
         {
           path: '/certificates',
           name: 'certificates',
-          component: () => import('../views/CertificatesPage.vue'),
+          component: () =>
+            import('../features/certificates/pages/CertificatesPage.vue'),
           meta: { protected: true },
         },
         {
@@ -40,19 +41,20 @@ const router = createRouter({
         {
           path: '/mail',
           name: 'mail',
-          component: () => import('../views/MailPage.vue'),
+          component: () => import('../features/mail-info/pages/MailPage.vue'),
           meta: { protected: true },
         },
         {
           path: '/shop',
           name: 'shop',
-          component: () => import('../views/ShopPage.vue'),
+          component: () => import('../features/shop/pages/ShopPage.vue'),
           meta: { protected: true },
         },
         {
           path: '/users',
           name: 'users',
-          component: () => import('../features/user-admin/pages/UserAdminPage.vue'),
+          component: () =>
+            import('../features/user-admin/pages/UserAdminPage.vue'),
           meta: { protected: true },
         },
         {

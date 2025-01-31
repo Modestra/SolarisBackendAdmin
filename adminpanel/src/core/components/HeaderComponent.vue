@@ -20,6 +20,7 @@
             icon="pi pi-user"
             class="flex-auto"
             @click="outFromAccount"
+            severity="danger"
             outlined
           ></Button>
         </template>
@@ -34,10 +35,13 @@ import Toolbar from 'primevue/toolbar';
 import Drawer from 'primevue/drawer';
 import Button from 'primevue/button';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 const visible = ref(false);
+const router = useRouter();
 
 const outFromAccount = () => {
   localStorage.setItem('token', '');
+  router.push('/auth');
 };
 </script>
 

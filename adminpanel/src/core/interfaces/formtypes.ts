@@ -11,3 +11,7 @@ export interface FormModel {
 export enum Validation {
     required = 1,
 }
+
+export interface TableFieldModel {
+    
+}
