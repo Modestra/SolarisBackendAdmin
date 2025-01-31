@@ -15,3 +15,12 @@ export async function autoLoginService() {
   const res = await axiosR.get("/user/current_user");
   return res.data;
 }
+//Временно
+export async function addUserService(user: CreatedUser) {
+  const res = await axiosR.post("/user/create_user", user, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return res;
+}

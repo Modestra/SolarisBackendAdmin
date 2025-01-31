@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit" @keyup.enter class="">
-    <p class="form__text">Авторизация</p>
+    <p class="form__text">{{ title }}</p>
     <div class="form__fields">
       <div v-for="field in formModel" class="form__group">
         <label :for="field.type">{{ field.label }}</label>
@@ -17,6 +17,9 @@ import { ModelRef } from 'vue';
 import { defineEmits } from 'vue';
 const passwordVisible = false;
 const emit = defineEmits(['onSubmit']);
+const title: ModelRef<string> = defineModel<string>('title', {
+  required: true,
+});
 const formModel: ModelRef<FormModel[]> = defineModel<FormModel[]>('formGroup', {
   required: true,
   default: {} as FormModel[],
