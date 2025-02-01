@@ -13,7 +13,7 @@ import Button from 'primevue/button';
 import { FormModel } from '../../../core/interfaces/formtypes';
 import { inject, ref, Ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '../../../stores/userStore';
+import { useUserStore } from '../../../core/stores/userStore';
 
 const userService: any = inject('UserService');
 const router = useRouter();

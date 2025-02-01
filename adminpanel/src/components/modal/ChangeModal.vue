@@ -108,11 +108,11 @@
 </template>
 
 <script setup lang="ts">
-import Dialog from "primevue/dialog";
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
-import { defineProps, defineEmits, computed } from "vue";
-import Textarea from "primevue/textarea";
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import { defineProps, computed } from 'vue';
+import Textarea from 'primevue/textarea';
 
 const props = defineProps({
   visible: Boolean,
@@ -122,18 +122,18 @@ const props = defineProps({
 });
 
 const type = computed(() => {
-  if (props.type === "teacher") return "учителя";
-  if (props.type === "student") return "ученика";
-  if (props.type === "competition") return "конкурс";
+  if (props.type === 'teacher') return 'учителя';
+  if (props.type === 'student') return 'ученика';
+  if (props.type === 'competition') return 'конкурс';
 });
 
-const emit = defineEmits(["update:visible", "save"]);
+const emit = defineEmits(['update:visible', 'save']);
 
 function closeDialog() {
-  emit("update:visible", false);
+  emit('update:visible', false);
 }
 
 function saveTeacher() {
-  emit("save");
+  emit('save');
 }
 </script>

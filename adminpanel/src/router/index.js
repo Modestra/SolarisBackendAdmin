@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AuthorizationPage from '../features/authentification/pages/AuthorizationPage.vue';
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../core/stores/userStore';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,12 +16,6 @@ const router = createRouter({
           name: 'start-page',
           component: () =>
             import('../features/main-page-info/pages/CatalogPage.vue'),
-          meta: { protected: true },
-        },
-        {
-          path: '/account',
-          name: 'account',
-          component: () => import('../views/AccauntPage.vue'),
           meta: { protected: true },
         },
         {
@@ -57,17 +51,19 @@ const router = createRouter({
             import('../features/user-admin/pages/UserAdminPage.vue'),
           meta: { protected: true },
         },
-        {
-          path: '/:pathMatch(.*)*',
-          name: '404',
-          component: () => import('../views/NotFoundPage.vue'),
-        },
       ],
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      component: () =>
+        import('../features/main-page-info/pages/NotFoundPage.vue'),
     },
     {
       path: '/auth',
       name: 'auth',
-      component: AuthorizationPage,
+      component: () =>
+        import('../features/authentification/pages/AuthorizationPage.vue'),
     },
   ],
 });

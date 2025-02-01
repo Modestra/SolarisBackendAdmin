@@ -26,7 +26,7 @@ main {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  height: 100vh;
+  height: 100%;
 }
 .catalog {
   display: flex;
@@ -45,7 +45,7 @@ main {
   }
 }
 
-.p-datatable{
+.p-datatable {
   background: white;
 }
 </style>
