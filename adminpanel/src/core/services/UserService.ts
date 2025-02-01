@@ -21,8 +21,24 @@ export class UserService {
         return this._axiosR.get("/user")
     }
 
+    public createUser(data: any) {
+        return this._axiosR.post("/user/create_user", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+    }
+
     public getTeacherList() {
         return this._axiosR.get('/teacher')
+    }
+
+    public createTeacher(data: any) {
+        return this._axiosR.post("/user/create_user", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
     }
 
     public getStudentList() {

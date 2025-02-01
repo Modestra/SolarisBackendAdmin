@@ -2,54 +2,78 @@
   <div class="flex flex-column gap-2">
     <div class="flex flex-row justify-between">
       <SelectButton v-model="tableState" :options="options" />
-      <InputGroup class="max-w-xs">
-        <InputGroupAddon>
-          <i class="pi pi-user"></i>
-        </InputGroupAddon>
-        <InputText placeholder="Найти пользователя..." />
-      </InputGroup>
+      <Button
+        icon="pi pi-plus"
+        @click="createVisible = true"
+        severity="success"
+      ></Button>
     </div>
     <TableComponent
       :data="tableData"
       :config="tableService.getConfig()"
     ></TableComponent>
   </div>
+  <Dialog
+    v-model:visible="createVisible"
+    header="Создать по форме "
+    modal
+    :style="{ width: '25rem' }"
+  >
+    <FormComponent :title="''" :form-group="[]"></FormComponent>
+    <div class="flex justify-end gap-2">
+      <Button
+        label="Отменить"
+        severity="danger"
+        @click="disableOnForm"
+      ></Button>
+      <Button label="Создать" severity="success" @click="createOnForm"></Button>
+    </div>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
-enum DataTableType {
-  Users,
-  Teachers,
-  Students,
-}
 import { ref, onMounted, inject, watch } from 'vue';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
-import InputText from 'primevue/inputtext';
 import SelectButton from 'primevue/selectbutton';
 import TableComponent from '../../../core/components/TableComponent.vue';
+import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
 import { TableService } from '../../../core/services/TableService';
 import { UserService } from '../../../core/services/UserService';
+import { AxiosResponse } from 'axios';
+import FormComponent from '../../../core/components/FormComponent.vue';
 
 const userService = inject('UserService') as UserService;
 const tableService = inject('TableService') as TableService;
 
+const createVisible = ref(false);
 const tableData = ref();
 
 const tableState = ref('Пользователи');
 const options = ref(['Пользователи', 'Учителя', 'Ученики']);
 
-tableService.setConfig({
-  columns: [
-    { field: 'username', column: 'Login', columnType: 'string' },
-    { field: 'email', column: 'E-mail', columnType: 'string' },
-    { field: 'category', column: 'Категория', columnType: 'string' },
-  ],
-  isEdit: true,
+const disableOnForm = () => {
+  createVisible.value = false;
+};
+
+const createOnForm = () => {
+  createVisible.value = false;
+};
+
+onMounted(() => {
+  tableService.setConfig({
+    columns: [
+      { field: 'username', column: 'Login', columnType: 'string' },
+      { field: 'email', column: 'E-mail', columnType: 'string' },
+      { field: 'category', column: 'Категория', columnType: 'string' },
+    ],
+    isEdit: true,
+  });
+  userService.getListUsers().then((res: AxiosResponse<any>) => {
+    tableData.value = res.data;
+  });
 });
 
-watch(tableState, (newState, oldState) => {
-  console.log(newState);
+watch(tableState, (newState) => {
   switch (newState) {
     case 'Пользователи':
       tableService.setConfig({
@@ -60,7 +84,7 @@ watch(tableState, (newState, oldState) => {
         ],
         isEdit: true,
       });
-      userService.getListUsers().then((res: any[]) => {
+      userService.getListUsers().then((res: AxiosResponse<any>) => {
         tableData.value = res.data;
       });
       return;
@@ -73,7 +97,7 @@ watch(tableState, (newState, oldState) => {
         ],
         isEdit: true,
       });
-      userService.getTeacherList().then((res: any[]) => {
+      userService.getTeacherList().then((res: AxiosResponse<any>) => {
         tableData.value = res.data;
       });
       return;
@@ -87,7 +111,7 @@ watch(tableState, (newState, oldState) => {
         ],
         isEdit: true,
       });
-      userService.getStudentList().then((res: any[]) => {
+      userService.getStudentList().then((res: AxiosResponse<any>) => {
         tableData.value = res.data;
       });
       return;
