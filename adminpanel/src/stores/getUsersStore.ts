@@ -1,19 +1,18 @@
-import { defineStore } from "pinia";
-import { getUsersService } from "../services/get/getUsers";
-import { getStudentsService } from "../services/get/getStudents";
-import { getTeachersService } from "../services/get/getTeachers";
-import { CreatedUser } from "../interfaces/create/createUser";
-import { CreatedTeacher } from "../interfaces/create/createTeacher";
-import { CreatedStudent } from "../interfaces/create/createStudent";
-import {
-  deleteStudentService,
-  deleteTeacherService,
-} from "../services/delete/delete";
+import { defineStore } from 'pinia';
+import { CreatedUser } from '../interfaces/create/createUser';
+import { CreatedTeacher } from '../interfaces/create/createTeacher';
+import { CreatedStudent } from '../interfaces/create/createStudent';
 import {
   changeStudentService,
   changeTeacherService,
-} from "../services/change/change";
-export const useGetUserStore = defineStore("getUser", {
+  deleteStudentService,
+  deleteTeacherService,
+  getStudentsService,
+  getTeachersService,
+  getUsersService,
+} from '../features/user-admin/services/userAdminService';
+
+export const useGetUserStore = defineStore('getUser', {
   state: () => ({
     users: [] as CreatedUser[],
     teachers: [] as CreatedTeacher[],
@@ -36,9 +35,9 @@ export const useGetUserStore = defineStore("getUser", {
       try {
         const res = await getUsersService();
         this.users = res.data;
-        console.log("пользователи", res.data);
+        console.log('пользователи', res.data);
       } catch (error) {
-        console.error("Ошибка при загрузке пользователей:", error);
+        console.error('Ошибка при загрузке пользователей:', error);
       }
     },
     async fetchStudents() {
@@ -47,7 +46,7 @@ export const useGetUserStore = defineStore("getUser", {
         this.students = res.data;
         console.log(res.data);
       } catch (error) {
-        console.error("Ошибка при загрузке студентов:", error);
+        console.error('Ошибка при загрузке студентов:', error);
       }
     },
     async fetchTeachers() {
@@ -56,31 +55,31 @@ export const useGetUserStore = defineStore("getUser", {
         this.teachers = res.data;
         console.log(res.data);
       } catch (error) {
-        console.error("Ошибка при загрузке учителей:", error);
+        console.error('Ошибка при загрузке учителей:', error);
       }
     },
 
     async deleteTeacher(user_id: string) {
       try {
         if (!user_id) {
-          console.error("Ошибка: user_id не передан");
+          console.error('Ошибка: user_id не передан');
           return;
         }
         const res = await deleteTeacherService(user_id);
       } catch (err) {
-        console.error("Ошибка при удалении учителя:", err);
+        console.error('Ошибка при удалении учителя:', err);
       }
     },
     async deleteStudent(user_id: string) {
       try {
         if (!user_id) {
-          console.error("Ошибка: user_id не передан");
+          console.error('Ошибка: user_id не передан');
 
           return;
         }
         const res = await deleteStudentService(user_id);
       } catch (err) {
-        console.error("Ошибка при удалении учителя:", err);
+        console.error('Ошибка при удалении учителя:', err);
       }
     },
     async changeTeacher(teacher_id: string, user: CreatedUser) {

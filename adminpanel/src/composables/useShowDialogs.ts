@@ -1,23 +1,22 @@
-import { ref } from "vue";
+import { ref } from 'vue';
+import { CreatedUser } from '../interfaces/create/createUser';
 
-export function useDialog<T>() {
+export function useDialog<T extends CreatedUser>() {
   const selectedItem = ref<T | null>(null);
-  const changeDialogVisible = ref(false);
-  const deleteDialogVisible = ref(false);
+  const changeDialogVisible = ref<boolean>(false);
+  const deleteDialogVisible = ref<boolean>(false);
 
-  function openChangeDialog(item: T) {
+  function openChangeDialog(item: T): void {
     selectedItem.value = { ...item };
-    console.log(selectedItem.value);
-    
     changeDialogVisible.value = true;
   }
 
-  function openDeleteDialog(item: T) {
+  function openDeleteDialog(item: T): void {
     selectedItem.value = { ...item };
     deleteDialogVisible.value = true;
   }
 
-  function closeDialogs() {
+  function closeDialogs(): void {
     selectedItem.value = null;
     changeDialogVisible.value = false;
     deleteDialogVisible.value = false;

@@ -19,9 +19,6 @@
             placeholder="Введите email пользователя"
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
-          <p v-if="errors.email" class="text-red-500 text-xs mt-1">
-            {{ errors.email }}
-          </p>
         </div>
 
         <div>
@@ -35,9 +32,6 @@
             placeholder="Введите пароль пользователя"
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
-          <p v-if="errors.password" class="text-red-500 text-xs mt-1">
-            {{ errors.password }}
-          </p>
         </div>
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700">
@@ -65,9 +59,6 @@
             <option value="Учитель">Учитель</option>
             <option value="Ученик">Ученик</option>
           </select>
-          <p v-if="errors.category" class="text-red-500 text-xs mt-1">
-            {{ errors.category }}
-          </p>
         </div>
 
         <div class="my-4">
@@ -79,7 +70,8 @@
 </template>
 
 <script setup lang="ts">
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
-import { handleSubmit } from "../../composables/useCreateUser";
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import { handleSubmit } from '../../composables/useCreateUser';
+import { userData } from '../../composables/useValidate';
 </script>

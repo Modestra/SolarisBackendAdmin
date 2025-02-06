@@ -1,18 +1,18 @@
-import { ref } from "vue";
-import { useCreateUserStore } from "../stores/createUserStore";
+import { ref } from 'vue';
+import { useCreateUserStore } from '../stores/createUserStore';
 import {
   showStudentForm,
   showTeacherForm,
   toggleShowForm,
-} from "./useShowUsers";
+} from './useShowUsers';
 import {
   errors,
   studentData,
   teacherData,
   userData,
   validateForm,
-} from "./useValidate";
-import { useRouter } from "vue-router";
+} from './useValidate';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
@@ -24,7 +24,7 @@ export function clearAddedUserState() {
   showTeacherForm.value = false;
   showStudentForm.value = false;
 
-  router.push("/account");
+  router.push('/account');
 }
 
 export async function handleSubmit() {
@@ -32,15 +32,15 @@ export async function handleSubmit() {
     try {
       await createUser.createUser({ ...userData });
       toggleShowForm();
-      userData.email = "";
-      userData.username = "";
-      userData.password = "";
-      userData.category = "";
+      userData.email = '';
+      userData.username = '';
+      userData.password = '';
+      userData.category = '';
     } catch (error) {
-      console.log("Ошибка при добавлении пользователя:", error);
+      console.log('Ошибка при добавлении пользователя:', error);
     }
   } else {
-    console.log("Форма содержит ошибки:", errors);
+    console.log('Форма содержит ошибки:', errors);
   }
 }
 
@@ -50,11 +50,11 @@ export async function handleSumbitTeacher() {
       teacherData.userId = createUser.userId;
       await createUser.addTeacher({ ...teacherData });
       isCreated.value = true;
-      teacherData.competition_activities = "";
-      teacherData.fathername = "";
-      teacherData.name = "";
-      teacherData.profeccion = "";
-      teacherData.surname = "";
+      teacherData.competition_activities = '';
+      teacherData.fathername = '';
+      teacherData.name = '';
+      teacherData.profeccion = '';
+      teacherData.surname = '';
     } catch (err) {
       console.log(err);
     }
@@ -67,9 +67,9 @@ export async function handleSumbitStudent() {
       studentData.user_id = createUser.userId;
       await createUser.addStudent({ ...studentData });
       isCreated.value = true;
-      studentData.fathername = "";
-      studentData.name = "";
-      studentData.surname = "";
+      studentData.fathername = '';
+      studentData.name = '';
+      studentData.surname = '';
     } catch (err) {
       console.log(err);
     }
