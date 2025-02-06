@@ -81,7 +81,5 @@
 <script setup lang="ts">
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
-
-import { errors, userData } from "../../composables/useValidate";
 import { handleSubmit } from "../../composables/useCreateUser";
 </script>
