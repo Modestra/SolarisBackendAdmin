@@ -7,9 +7,9 @@
       :value="usersList"
       tableStyle="width: 80vw;"
     >
-      <Column field="username" header="Логин"></Column>
-      <Column field="email" header="E-mail"></Column>
-      <Column field="category" header="Категория"></Column>
+      <Column field="name" header="Имя"></Column>
+      <Column field="surname" header="Фамилия"></Column>
+      <Column field="fathername" header="Отчество"></Column>
       <Column style="width: 80px">
         <template #body="{ data }">
           <div class="flex flex-row justify-center gap-2">
@@ -47,11 +47,12 @@
 </template>
 
 <script setup lang="ts">
+enum DataTableType {
+  Users,
+  Teachers,
+  Students,
+}
 import { ref, onMounted, inject, computed, watch } from 'vue';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
-import InputText from 'primevue/inputtext';
-import SelectButton from 'primevue/selectbutton';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -63,6 +64,13 @@ import { UserInfo } from '../../../interfaces/user/userInterfaces';
 
 const userService = inject('UserService') as any;
 const usersList = ref();
+const value = ref<string | number>(DataTableType.Users);
+
+const options = ref<{ label: string; value: string | number }[]>([
+  { label: 'Пользователи', value: DataTableType.Users },
+  { label: 'Учителя', value: DataTableType.Teachers },
+  { label: 'Ученики', value: DataTableType.Students },
+]);
 
 const userStore = useGetUserStore();
 const students = computed(() => userStore.getStudents);
@@ -75,6 +83,14 @@ const {
   openDeleteDialog,
   closeDialogs,
 } = useDialog();
+
+watch(
+  () => userStore.getStudents,
+  (newData) => {
+    usersList.value = newData;
+  },
+  { immediate: true },
+);
 
 function deleteStudent() {
   if (selectedItem.value?.user_id) {
@@ -123,9 +139,10 @@ interface ApiResponse<T> {
 
 onMounted(() => {
   userService
-    .getListUsers()
+    .getListStudents()
     .then((res: ApiResponse<User[]>) => {
       usersList.value = res.data;
+      console.log(usersList.value);
     })
     .catch((err) => {
       console.error('Ошибка при загрузке пользователей:', err);

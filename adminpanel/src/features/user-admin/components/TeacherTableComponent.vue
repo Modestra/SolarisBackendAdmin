@@ -7,9 +7,9 @@
       :value="usersList"
       tableStyle="width: 80vw;"
     >
-      <Column field="username" header="Логин"></Column>
-      <Column field="email" header="E-mail"></Column>
-      <Column field="category" header="Категория"></Column>
+      <Column field="name" header="Имя"></Column>
+      <Column field="surname" header="Фамилия"></Column>
+      <Column field="fathername" header="Отчество"></Column>
       <Column style="width: 80px">
         <template #body="{ data }">
           <div class="flex flex-row justify-center gap-2">
@@ -32,26 +32,27 @@
         :user="selectedItem"
         :visible="changeDialogVisible"
         @update:visible="closeDialogs"
-        @save="changeStudent"
-        type="student"
+        @save="changeTeacher"
+        type="teacher"
       />
       <DeleteModal
         :user="selectedItem"
         :visible="deleteDialogVisible"
         @update:visible="closeDialogs"
-        @delete="deleteStudent"
-        type="student"
+        @delete="deleteTeacher"
+        type="teacher"
       />
     </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, inject, computed, watch } from 'vue';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
-import InputText from 'primevue/inputtext';
-import SelectButton from 'primevue/selectbutton';
+enum DataTableType {
+  Users,
+  Teachers,
+  Students,
+}
+import { onMounted, computed } from 'vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -59,13 +60,9 @@ import ChangeModal from '../../../components/modal/ChangeModal.vue';
 import DeleteModal from '../../../components/modal/DeleteModal.vue';
 import { useGetUserStore } from '../../../stores/getUsersStore';
 import { useDialog } from '../../../composables/useShowDialogs';
-import { UserInfo } from '../../../interfaces/user/userInterfaces';
 
-const userService = inject('UserService') as any;
-const usersList = ref();
-
+const usersList = computed(() => userStore.getTeachers);
 const userStore = useGetUserStore();
-const students = computed(() => userStore.getStudents);
 
 const {
   selectedItem,
@@ -76,12 +73,12 @@ const {
   closeDialogs,
 } = useDialog();
 
-function deleteStudent() {
+function deleteTeacher() {
   if (selectedItem.value?.user_id) {
     userStore
-      .deleteStudent(String(selectedItem.value.user_id))
+      .deleteTeacher(String(selectedItem.value?.user_id))
       .then(() => {
-        userStore.fetchStudents();
+        userStore.fetchTeachers();
       })
       .catch((err) => {
         console.error('Ошибка при удалении пользователя:', err);
@@ -89,13 +86,16 @@ function deleteStudent() {
   }
 }
 
-function changeStudent() {
-  if (selectedItem.value?.user_id) {
+function changeTeacher() {
+  if (selectedItem.value?.teacher_id) {
     userStore
-      .changeStudent(String(selectedItem.value.user_id), selectedItem.value)
+      .changeTeacher(String(selectedItem.value.teacher_id), selectedItem.value)
       .then(() => {
-        userStore.fetchStudents();
+        userStore.fetchTeachers();
         closeDialogs();
+      })
+      .catch((err) => {
+        console.error('Ошибка при изменении учителя:', err);
       });
   }
 }
@@ -110,25 +110,7 @@ function deleteSelectedItem(data: any) {
   openDeleteDialog(data);
 }
 
-interface User {
-  user_id: number;
-  username: string;
-  email: string;
-  category: string;
-}
-
-interface ApiResponse<T> {
-  data: T;
-}
-
 onMounted(() => {
-  userService
-    .getListUsers()
-    .then((res: ApiResponse<User[]>) => {
-      usersList.value = res.data;
-    })
-    .catch((err) => {
-      console.error('Ошибка при загрузке пользователей:', err);
-    });
+  userStore.fetchTeachers();
 });
 </script>

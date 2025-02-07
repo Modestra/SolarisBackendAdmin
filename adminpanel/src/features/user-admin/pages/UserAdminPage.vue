@@ -15,6 +15,8 @@
     <CreateStudentForm v-if="showStudentForm" />
     <CreateTeacherForm v-if="showTeacherForm" />
     <UserTableComponent v-if="selectedOption.value === 'all'" />
+    <TeacherTableComponent v-if="selectedOption.value === 'teachers'" />
+    <StudentTableComponent v-if="selectedOption.value === 'students'" />
   </div>
 </template>
 
@@ -29,10 +31,14 @@ import {
   showStudentForm,
   showTeacherForm,
 } from '../../../composables/useShowUsers';
+import StudentTableComponent from '../components/StudentTableComponent.vue';
+import TeacherTableComponent from '../components/TeacherTableComponent.vue';
 
 const options = ref([
   { label: 'Создать пользователя', value: 'create' },
   { label: 'Все пользователи', value: 'all' },
+  { label: 'Все ученики', value: 'students' },
+  { label: 'Все учителя', value: 'teachers' },
 ]);
 
 const selectedOption = ref(options.value[0]);
