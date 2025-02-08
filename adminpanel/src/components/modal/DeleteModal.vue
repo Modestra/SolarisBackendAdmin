@@ -23,7 +23,7 @@
         type="button"
         label="Удалить"
         severity="danger"
-        @click="deleteTeacher"
+        @click="handleDelete"
       ></Button>
     </div>
   </Dialog>
@@ -53,7 +53,7 @@ function closeDialog() {
   emit("update:visible", false);
 }
 
-function deleteTeacher() {
+function handleDelete() {
   emit("delete");
   emit("update:visible", false);
 }

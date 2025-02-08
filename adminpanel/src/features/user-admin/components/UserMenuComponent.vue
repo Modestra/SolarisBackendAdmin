@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row justify-between">
-    <SelectButton v-model="value" :options="options" optionLabel="label" />
+    <!-- <SelectButton v-model="value" :options="options" optionLabel="label" /> -->
     <InputGroup class="max-w-xs">
       <InputGroupAddon>
         <i class="pi pi-user"></i>
@@ -22,11 +22,11 @@ enum DataTableType {
   Teachers,
   Students,
 }
-const value = ref<string | number>(DataTableType.Users);
+// const value = ref<string | number>(DataTableType.Users);
 
-const options = ref<{ label: string; value: string | number }[]>([
-  { label: 'Пользователи', value: DataTableType.Users },
-  { label: 'Учителя', value: DataTableType.Teachers },
-  { label: 'Ученики', value: DataTableType.Students },
-]);
+// const options = ref<{ label: string; value: string | number }[]>([
+//   { label: 'Пользователи', value: DataTableType.Users },
+//   { label: 'Учителя', value: DataTableType.Teachers },
+//   { label: 'Ученики', value: DataTableType.Students },
+// ]);
 </script>

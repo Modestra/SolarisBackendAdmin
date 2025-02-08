@@ -32,26 +32,22 @@
         :user="selectedItem"
         :visible="changeDialogVisible"
         @update:visible="closeDialogs"
-        @save="changeStudent"
-        type="student"
+        @save="handleChangeUser"
+        type="user"
       />
       <DeleteModal
         :user="selectedItem"
         :visible="deleteDialogVisible"
         @update:visible="closeDialogs"
-        @delete="deleteStudent"
-        type="student"
+        @delete="handleDeleteUser"
+        type="user"
       />
     </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, inject, computed, watch } from 'vue';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
-import InputText from 'primevue/inputtext';
-import SelectButton from 'primevue/selectbutton';
+import { ref, onMounted, inject, computed } from 'vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -59,13 +55,11 @@ import ChangeModal from '../../../components/modal/ChangeModal.vue';
 import DeleteModal from '../../../components/modal/DeleteModal.vue';
 import { useGetUserStore } from '../../../stores/getUsersStore';
 import { useDialog } from '../../../composables/useShowDialogs';
-import { UserInfo } from '../../../interfaces/user/userInterfaces';
 
 const userService = inject('UserService') as any;
 const usersList = ref();
 
 const userStore = useGetUserStore();
-const students = computed(() => userStore.getStudents);
 
 const {
   selectedItem,
@@ -76,26 +70,29 @@ const {
   closeDialogs,
 } = useDialog();
 
-function deleteStudent() {
+function handleDeleteUser() {
   if (selectedItem.value?.user_id) {
+    console.log(selectedItem.value);
     userStore
-      .deleteStudent(String(selectedItem.value.user_id))
-      .then(() => {
-        userStore.fetchStudents();
-      })
+      .deleteUser(String(selectedItem.value.user_id))
+      .then(() => userStore.fetchUsers())
       .catch((err) => {
         console.error('Ошибка при удалении пользователя:', err);
       });
   }
 }
 
-function changeStudent() {
+function handleChangeUser() {
   if (selectedItem.value?.user_id) {
     userStore
-      .changeStudent(String(selectedItem.value.user_id), selectedItem.value)
+      .changeUser(String(selectedItem.value.user_id), selectedItem.value)
+
       .then(() => {
-        userStore.fetchStudents();
+        userStore.fetchUsers();
         closeDialogs();
+      })
+      .catch((err) => {
+        console.error('Ошибка при изменении пользователя:', err);
       });
   }
 }

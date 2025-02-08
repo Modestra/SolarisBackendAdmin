@@ -5,6 +5,9 @@
       :options="options"
       optionLabel="label"
     />
+    <div v-if="isSearchVisible" class="flex justify-end">
+      <UserMenuComponent />
+    </div>
     <CreateUserForm
       v-if="
         selectedOption.value === 'create' &&
@@ -22,7 +25,7 @@
 
 <script setup lang="ts">
 import SelectButton from 'primevue/selectbutton';
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import UserTableComponent from '../components/UserTableComponent.vue';
 import CreateUserForm from '../../../components/form/CreateUserForm.vue';
 import CreateStudentForm from '../../../components/form/CreateStudentForm.vue';
@@ -33,6 +36,8 @@ import {
 } from '../../../composables/useShowUsers';
 import StudentTableComponent from '../components/StudentTableComponent.vue';
 import TeacherTableComponent from '../components/TeacherTableComponent.vue';
+import UserMenuComponent from '../components/UserMenuComponent.vue';
+import { useRoute } from 'vue-router';
 
 const options = ref([
   { label: 'Создать пользователя', value: 'create' },
@@ -41,5 +46,14 @@ const options = ref([
   { label: 'Все учителя', value: 'teachers' },
 ]);
 
+const isSearchVisible = ref(false);
+
 const selectedOption = ref(options.value[0]);
+watch(selectedOption, (newValue, oldValue) => {
+  if (newValue.value === 'create') {
+    isSearchVisible.value = false;
+  } else {
+    isSearchVisible.value = true;
+  }
+});
 </script>

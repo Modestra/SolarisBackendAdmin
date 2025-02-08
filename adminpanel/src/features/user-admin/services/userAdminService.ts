@@ -27,6 +27,14 @@ export async function addTeacherService(user: CreatedUser) {
   return res;
 }
 
+export async function changeUserService(user_id: string, user: CreatedUser) {
+  const res = await axiosR.put(`/user/update_user/${user_id}`, user, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res;
+}
 export async function changeStudentService(user_id: string, user: CreatedUser) {
   const res = await axiosR.put(`/pupil/update_pupil/${user_id}`, user, {
     headers: {
@@ -49,6 +57,18 @@ export async function changeTeacherService(
 
 export async function deleteTeacherService(user_id: string) {
   const res = await axiosR.delete(`/teacher/delete_teacher/${user_id}`);
+  return res;
+}
+export async function deleteUserService(user_id: string) {
+  const res = await axiosR.delete(`/user/delete_user`, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: {
+      user_id: user_id,
+    },
+  });
+
   return res;
 }
 export async function deleteStudentService(user_id: string) {
