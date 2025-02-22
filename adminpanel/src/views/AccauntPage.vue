@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import CreateStudentForm from '../components/form/CreateStudentForm.vue';
-import CreateTeacherForm from '../components/form/CreateTeacherForm.vue';
-import CreateUserForm from '../components/form/CreateUserForm.vue';
 import { showStudentForm, showTeacherForm } from '../composables/useShowUsers';
+import CreateUserForm from '../components/form/CreateUserForm.vue';
+import CreateTeacherForm from '../components/form/CreateTeacherForm.vue';
+import CreateStudentForm from '../components/form/CreateStudentForm.vue';
 
 const userService: any = inject('userService');
 </script>

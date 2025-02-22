@@ -1,4 +1,4 @@
-<template>Компанет главной страницы</template>
+<template>Компонент главной страницы</template>
 
 <script lang="js"></script>
 

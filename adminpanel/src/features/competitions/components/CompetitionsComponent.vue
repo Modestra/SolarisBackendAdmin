@@ -89,12 +89,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
-import { useCompetitionStore } from "../../stores/competitionStore";
-import Button from "primevue/button";
-import DeleteModal from "../modal/DeleteModal.vue";
-import ChangeModal from "../modal/ChangeModal.vue";
-import { useDialog } from "../../composables/useShowDialogs";
+import { computed, onMounted } from 'vue';
+import { useCompetitionStore } from '../../../stores/competitionStore';
+import Button from 'primevue/button';
+import DeleteModal from '../../../components/modal/DeleteModal.vue';
+import ChangeModal from '../../../components/modal/ChangeModal.vue';
+import { useDialog } from '../../../composables/useShowDialogs';
 
 const competitionStore = useCompetitionStore();
 const competitions = computed(() => {

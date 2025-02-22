@@ -11,16 +11,41 @@ import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import { createPinia } from 'pinia';
 import UserService from './core/services/UserService';
+import { definePreset } from '@primevue/themes';
+import TableService from './core/services/TableService';
 
 const pinia = createPinia();
 const app = createApp(App);
+const CustomPreset = definePreset(Aura, {
+  semantic: {
+    colorScheme: {
+      light: {
+        primary: {
+          color: '{orange.500}',
+          inverseColor: '#ffffff',
+          hoverColor: '{orange.900}',
+          activeColor: '{orange.800}',
+        },
+      },
+      dark: {
+        primary: {
+          color: '{orange.500}',
+          inverseColor: '#ffffff',
+          hoverColor: '{orange.600}',
+          activeColor: '{orange.800}',
+        },
+        surface: {},
+      },
+    },
+  },
+});
 app.use(PrimeVue, {
   theme: {
-    preset: Aura,
+    preset: CustomPreset,
   },
 });
 
 app.use(router).use(pinia);
 app.use(ToastService).use(ConfirmationService);
-app.use(UserService); //Самописные плагины
+app.use(UserService).use(TableService); //Самописные плагины
 app.mount('#app');

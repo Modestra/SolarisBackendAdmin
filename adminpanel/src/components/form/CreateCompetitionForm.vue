@@ -8,46 +8,26 @@
         Создание конкурса
       </h1>
       <div class="space-y-4">
-        <div>
-          <label for="title" class="block text-sm font-medium text-gray-700">
-            Название
-          </label>
-          <InputText
-            v-model="competitionFields.title"
-            id="title"
-            type="text"
-            placeholder="Введите название конкурса"
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
+        <div
+          v-for="(field, index) in formFields"
+          :key="index"
+          class="space-y-2"
+        >
           <label
-            for="description"
+            :for="field.id"
             class="block text-sm font-medium text-gray-700"
           >
-            Описание конкурса
+            {{ field.label }}
           </label>
-          <Textarea
-            v-model="competitionFields.description"
-            id="description"
-            rows="5"
-            cols="30"
-            placeholder="Введите описание конкурса"
+          <component
+            :is="field.component"
+            v-model="competitionFields[field.model]"
+            :id="field.id"
+            :rows="field.rows"
+            :cols="field.cols"
+            :placeholder="field.placeholder"
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            style="resize: none"
-          />
-        </div>
-        <div>
-          <label for="task" class="block text-sm font-medium text-gray-700">
-            Задача конкурса
-          </label>
-          <InputText
-            v-model="competitionFields.task_competitions"
-            id="task"
-            type="text"
-            placeholder="Введите задачу конкурса"
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            :style="field.style"
           />
         </div>
         <div class="my-4">
@@ -59,12 +39,39 @@
 </template>
 
 <script setup lang="ts">
-import Textarea from "primevue/textarea";
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
-
+import Textarea from 'primevue/textarea';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 import {
   competitionFields,
   createCompetition,
-} from "../../composables/useCompetition";
+} from '../../features/competitions/services/useCompetitions';
+import { CreateFormField } from '../../features/competitions/types';
+
+const formFields: CreateFormField[] = [
+  {
+    label: 'Название',
+    id: 'title',
+    model: 'title',
+    component: InputText,
+    placeholder: 'Введите название конкурса',
+  },
+  {
+    label: 'Описание конкурса',
+    id: 'description',
+    model: 'description',
+    component: Textarea,
+    rows: 5,
+    cols: 30,
+    placeholder: 'Введите описание конкурса',
+    style: 'resize: none',
+  },
+  {
+    label: 'Задача конкурса',
+    id: 'task',
+    model: 'task_competitions',
+    component: InputText,
+    placeholder: 'Введите задачу конкурса',
+  },
+];
 </script>
