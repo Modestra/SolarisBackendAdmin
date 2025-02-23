@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import Dialog from "primevue/dialog";
-import Button from "primevue/button";
-import { defineProps, defineEmits, computed } from "vue";
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
+import { computed } from 'vue';
 
 const props = defineProps({
   user: Object,
@@ -42,19 +42,19 @@ const props = defineProps({
 });
 
 const type = computed(() => {
-  if (props.type === "teacher") return "учителя";
-  if (props.type === "student") return "ученика";
-  if (props.type === "competition") return "конкурс";
+  if (props.type === 'teacher') return 'учителя';
+  if (props.type === 'student') return 'ученика';
+  if (props.type === 'competition') return 'конкурс';
 });
 
-const emit = defineEmits(["update:visible", "delete"]);
+const emit = defineEmits(['update:visible', 'delete']);
 
 function closeDialog() {
-  emit("update:visible", false);
+  emit('update:visible', false);
 }
 
 function handleDelete() {
-  emit("delete");
-  emit("update:visible", false);
+  emit('delete');
+  emit('update:visible', false);
 }
 </script>

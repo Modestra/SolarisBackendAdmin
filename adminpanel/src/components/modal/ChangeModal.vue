@@ -151,7 +151,7 @@
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import { defineProps, defineEmits, computed } from 'vue';
+import { computed } from 'vue';
 import Textarea from 'primevue/textarea';
 
 const props = defineProps({

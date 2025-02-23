@@ -6,10 +6,14 @@
       showGridlines
       :value="usersList"
       tableStyle="width: 80vw;"
+      selectionMode="single"
+      :selection="selectedRow"
+      @update:selection="onRowSelect"
     >
-      <Column field="username" header="Логин"></Column>
-      <Column field="email" header="E-mail"></Column>
-      <Column field="category" header="Категория"></Column>
+      <Column field="username" header="Логин" style="width: 34%"></Column>
+
+      <Column field="email" header="E-mail" style="width: 34%"></Column>
+      <Column field="category" header="Категория " style="width: 34%"></Column>
       <Column style="width: 80px">
         <template #body="{ data }">
           <div class="flex flex-row justify-center gap-2">
@@ -23,6 +27,13 @@
               @click="deleteSelectedItem(data)"
               severity="danger"
             ></Button>
+            <UploadFileComponent :userId="data.user_id" />
+          </div>
+          <div
+            v-if="selectedRow && selectedRow.user_id === data.user_id"
+            class="p-2 bg-gray-100"
+          >
+            Дополнительная информация для пользователя: {{ data.username }}
           </div>
         </template>
       </Column>
@@ -47,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, inject, computed } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -55,11 +66,24 @@ import ChangeModal from '../../../components/modal/ChangeModal.vue';
 import DeleteModal from '../../../components/modal/DeleteModal.vue';
 import { useGetUserStore } from '../../../stores/getUsersStore';
 import { useDialog } from '../../../composables/useShowDialogs';
+import UploadFileComponent from '../../upload-file/UploadFileComponent.vue';
+import { useFileStore } from '../../../stores/fileStore';
 
 const userService = inject('UserService') as any;
 const usersList = ref();
+const fileStore = useFileStore();
 
 const userStore = useGetUserStore();
+
+const selectedRow = ref(null);
+
+const showInfo = ref(false);
+
+function onRowSelect(newSelection) {
+  console.log('Выбранная строка:', newSelection);
+  selectedRow.value = newSelection;
+  showInfo.value = true;
+}
 
 const {
   selectedItem,
@@ -112,6 +136,7 @@ interface User {
   username: string;
   email: string;
   category: string;
+  files: Array<{ name: string; url: string }>; // Add files field
 }
 
 interface ApiResponse<T> {

@@ -60,7 +60,6 @@
             <option value="Ученик">Ученик</option>
           </select>
         </div>
-
         <div class="my-4">
           <Button type="submit" class="w-full">Зарегистрировать</Button>
         </div>
@@ -74,4 +73,10 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import { handleSubmit } from '../../composables/useCreateUser';
 import { userData } from '../../composables/useValidate';
+import { onMounted } from 'vue';
+import { useGetUserStore } from '../../stores/getUsersStore';
+const userStore = useGetUserStore();
+onMounted(() => {
+  userStore.fetchUsers();
+});
 </script>
