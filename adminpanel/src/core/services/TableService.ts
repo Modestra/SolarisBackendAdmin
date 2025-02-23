@@ -1,6 +1,5 @@
 import { App } from "vue";
-import axiosR from "../api/http";
-import { AuthModel } from "../types/auth";
+import { TableConfig, TableField } from "../interfaces/tableTypes";
 
 
 export default {
@@ -10,6 +9,16 @@ export default {
     }
 }
 
-class TableService {
+export class TableService {
 
+    config!: TableConfig;
+    fields!: TableField[];
+
+    public getConfig(): TableConfig {
+        return this.config;
+    }
+
+    public setConfig(config: TableConfig) {
+        this.config = config;
+    }
 }

@@ -1,6 +1,6 @@
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useUserStore } from "../stores/userStore";
+import { useUserStore } from "../core/stores/userStore";
 import { User } from "../interfaces/user/userInterfaces";
 
 export function useAuth() {
@@ -16,7 +16,7 @@ export function useAuth() {
   const loginUser = async () => {
     try {
       await userStore.login({ ...formValue });
-    
+
       if (localStorage.getItem("token")) {
         router.push("/account");
       }

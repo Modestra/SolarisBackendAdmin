@@ -56,12 +56,12 @@
 </template>
 
 <script setup lang="ts">
-import Card from "primevue/card";
-import { computed, onMounted } from "vue";
-import { useGetUserStore } from "../../stores/getUsersStore";
-import { useDialog } from "../../composables/useShowDialogs";
-import ChangeModal from "../modal/ChangeModal.vue";
-import DeleteModal from "../modal/DeleteModal.vue";
+import Card from 'primevue/card';
+import { computed, onMounted } from 'vue';
+import { useGetUserStore } from '../../core/stores/getUsersStore';
+import { useDialog } from '../../composables/useShowDialogs';
+import ChangeModal from '../modal/ChangeModal.vue';
+import DeleteModal from '../modal/DeleteModal.vue';
 
 const userGetStore = useGetUserStore();
 const teachers = computed(() => userGetStore.getTeachers);

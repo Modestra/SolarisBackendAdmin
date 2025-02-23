@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { useCreateUserStore } from "../stores/createUserStore";
+import { useCreateUserStore } from "../core/stores/createUserStore";
 import {
   showStudentForm,
   showTeacherForm,

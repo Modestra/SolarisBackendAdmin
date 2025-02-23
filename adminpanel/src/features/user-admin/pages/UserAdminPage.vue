@@ -1,109 +1,124 @@
 <template>
   <div class="flex flex-column gap-2">
     <div class="flex flex-row justify-between">
-      <SelectButton v-model="value" :options="options" optionLabel="label" />
-      <InputGroup class="max-w-xs">
-        <InputGroupAddon>
-          <i class="pi pi-user"></i>
-        </InputGroupAddon>
-        <InputText placeholder="Найти пользователя..." />
-      </InputGroup>
+      <SelectButton v-model="tableState" :options="options" />
+      <Button
+        icon="pi pi-plus"
+        @click="createVisible = true"
+        severity="success"
+      ></Button>
     </div>
-    <DataTable
-      paginator
-      :rows="10"
-      showGridlines
-      :value="usersList"
-      tableStyle="width: 80vw;"
-    >
-      <Column field="username" header="Логин"></Column>
-      <Column field="email" header="E-mail"></Column>
-      <Column field="category" header="Категория"></Column>
-      <Column style="width: 80px">
-        <template #body="{ data }">
-          <div class="flex flex-row justify-center gap-2">
-            <Button
-              icon="pi pi-pencil"
-              @click="updateSelectedItem(data)"
-              severity="warn"
-            ></Button>
-            <Button
-              icon="pi pi-times"
-              @click="deleteSelectedItem(data)"
-              severity="danger"
-            ></Button>
-          </div>
-        </template>
-      </Column>
-    </DataTable>
-    <Dialog
-      v-model:visible="visibleEdit"
-      modal
-      header="Edit Profile"
-      :style="{ width: '25rem' }"
-    >
-      <FormComponent :title="'Изменение'" :form-group="[]"></FormComponent>
-    </Dialog>
+    <TableComponent
+      :data="tableData"
+      :config="tableService.getConfig()"
+    ></TableComponent>
   </div>
+  <Dialog
+    v-model:visible="createVisible"
+    header="Создать по форме "
+    modal
+    :style="{ width: '25rem' }"
+  >
+    <FormComponent :title="''" :form-group="[]"></FormComponent>
+    <div class="flex justify-end gap-2">
+      <Button
+        label="Отменить"
+        severity="danger"
+        @click="disableOnForm"
+      ></Button>
+      <Button label="Создать" severity="success" @click="createOnForm"></Button>
+    </div>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
-enum DataTableType {
-  Users,
-  Teachers,
-  Students,
-}
-import { ref, onMounted, inject, watch, onUpdated } from 'vue';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
-import InputText from 'primevue/inputtext';
+import { ref, onMounted, inject, watch } from 'vue';
 import SelectButton from 'primevue/selectbutton';
+import TableComponent from '../../../core/components/TableComponent.vue';
 import Button from 'primevue/button';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
 import Dialog from 'primevue/dialog';
+import { TableService } from '../../../core/services/TableService';
+import { UserService } from '../../../core/services/UserService';
+import { AxiosResponse } from 'axios';
 import FormComponent from '../../../core/components/FormComponent.vue';
-import { FormModel } from '../../../core/interfaces/formtypes';
 
-const userService = inject('UserService') as any;
-const usersList = ref();
-const visibleEdit = ref(false);
+const userService = inject('UserService') as UserService;
+const tableService = inject('TableService') as TableService;
 
-const value = ref(DataTableType.Users);
-const options = ref([
-  { label: 'Пользователи', value: DataTableType.Users },
-  { label: 'Учителя', value: DataTableType.Teachers },
-  { label: 'Ученики', value: DataTableType.Students },
-]);
-watch(value, (oldTable, newTable) => {
-  switch (oldTable.value) {
-    case DataTableType.Users:
-      //router.push({ path: '', query: { table: 'users' } });
+const createVisible = ref(false);
+const tableData = ref();
 
-      return;
-    case DataTableType.Teachers:
-      //router.push({ path: '', query: { table: 'teachers' } });
-      return;
-    case DataTableType.Students:
-      //router.push({ path: '', query: { table: 'students' } });
-      return;
-    default:
-      //router.push({ path: '', query: { table: 'users' } });
-      return;
-  }
-});
-onUpdated(() => {});
+const tableState = ref('Пользователи');
+const options = ref(['Пользователи', 'Учителя', 'Ученики']);
+
+const disableOnForm = () => {
+  createVisible.value = false;
+};
+
+const createOnForm = () => {
+  createVisible.value = false;
+};
+
 onMounted(() => {
-  userService.getListUsers().then((res: any[]) => {
-    usersList.value = res.data;
+  tableService.setConfig({
+    columns: [
+      { field: 'username', column: 'Login', columnType: 'string' },
+      { field: 'email', column: 'E-mail', columnType: 'string' },
+      { field: 'category', column: 'Категория', columnType: 'string' },
+    ],
+    isEdit: true,
+  });
+  userService.getListUsers().then((res: AxiosResponse<any>) => {
+    tableData.value = res.data;
   });
 });
 
-function deleteSelectedItem(data: any) {}
-
-function updateSelectedItem(data: any) {
-  visibleEdit.value = true;
-}
+watch(tableState, (newState) => {
+  switch (newState) {
+    case 'Пользователи':
+      tableService.setConfig({
+        columns: [
+          { field: 'username', column: 'Login', columnType: 'string' },
+          { field: 'email', column: 'E-mail', columnType: 'string' },
+          { field: 'category', column: 'Категория', columnType: 'string' },
+        ],
+        isEdit: true,
+      });
+      userService.getListUsers().then((res: AxiosResponse<any>) => {
+        tableData.value = res.data;
+      });
+      return;
+    case 'Учителя':
+      tableService.setConfig({
+        columns: [
+          { field: 'name', column: 'Имя' },
+          { field: 'surname', column: 'Фамилия' },
+          { field: 'fathername', column: 'Отчество' },
+        ],
+        isEdit: true,
+      });
+      userService.getTeacherList().then((res: AxiosResponse<any>) => {
+        tableData.value = res.data;
+      });
+      return;
+    case 'Ученики':
+      tableService.setConfig({
+        columns: [
+          { field: 'name', column: 'Имя' },
+          { field: 'surname', column: 'Фамилия' },
+          { field: 'fathername', column: 'Отчество' },
+          { field: 'profeccion', column: 'Профессия' },
+        ],
+        isEdit: true,
+      });
+      userService.getStudentList().then((res: AxiosResponse<any>) => {
+        tableData.value = res.data;
+      });
+      return;
+    default:
+      return;
+  }
+});
 </script>
 
 <style scoped>

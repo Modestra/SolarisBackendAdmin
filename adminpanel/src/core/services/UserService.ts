@@ -3,20 +3,44 @@ import { AuthModel } from '../types/auth';
 import axiosR from '../api/http';
 
 export default {
-  install: (app: App) => {
-    const _userService = new UserService();
-    app.provide('UserService', _userService);
-  },
+    install: (app: App) => {
+        const _userService = new UserService();
+        app.provide('UserService', _userService);
+    },
 };
 
-class UserService {
+export class UserService {
     private _axiosR = axiosR;
 
     public loginAdmin(data: AuthModel) {
         return this._axiosR.post("/auth/login", data)
     }
 
-    public getListUsers(){
+    public getListUsers() {
         return this._axiosR.get("/user")
+    }
+
+    public createUser(data: any) {
+        return this._axiosR.post("/user/create_user", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+    }
+
+    public getTeacherList() {
+        return this._axiosR.get('/teacher')
+    }
+
+    public createTeacher(data: any) {
+        return this._axiosR.post("/user/create_user", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+    }
+
+    public getStudentList() {
+        return this._axiosR.get('/pupil')
     }
 }

@@ -11,7 +11,14 @@ const getAliasObject = (findName: string, path: string): Alias => {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue({ script: { defineModel: true } })],
+  plugins: [vue({
+    script: { defineModel: true },
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => ['md-linedivider'].includes(tag),
+      }
+    }
+  })],
   server: {
     port: 8100
   },

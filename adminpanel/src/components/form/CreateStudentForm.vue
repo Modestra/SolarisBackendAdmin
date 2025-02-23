@@ -82,17 +82,17 @@
 </template>
 
 <script setup lang="ts">
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 
 import {
   clearAddedUserState,
   handleSumbitStudent,
   isCreated,
-} from "../../composables/useCreateUser";
-import { computed, onMounted, reactive, ref, watch } from "vue";
-import { useGetUserStore } from "../../stores/getUsersStore";
-import { studentData } from "../../composables/useValidate";
+} from '../../composables/useCreateUser';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { useGetUserStore } from '../../core/stores/getUsersStore';
+import { studentData } from '../../composables/useValidate';
 
 const getUserStore = useGetUserStore();
 
