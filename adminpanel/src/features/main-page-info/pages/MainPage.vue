@@ -1,13 +1,16 @@
 <template>
-  <HeaderComponent></HeaderComponent>
-  <main class="w-full flex mt-4">
-    <RouterView></RouterView>
-  </main>
+  <MainLayout>
+    <HeaderComponent />
+    <main>
+      <RouterView></RouterView>
+    </main>
+  </MainLayout>
 </template>
 
 <script setup lang="ts">
+import { RouterView } from 'vue-router';
+import HeaderComponent from '../../../core/components/HeaderComponent.vue';
 import { Catalog } from '../services/catalog';
-import HeaderComponent from '../../../core/components';
 const catalogs: Catalog[] = [
   {
     name: 'Создание пользователя',
@@ -22,11 +25,11 @@ const catalogs: Catalog[] = [
 
 <style scoped lang="scss">
 main {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  height: 100vh;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: start;
+  // align-items: center;
+  // height: 100vh;
 }
 .catalog {
   display: flex;
@@ -45,7 +48,7 @@ main {
   }
 }
 
-.p-datatable{
+.p-datatable {
   background: white;
 }
 </style>

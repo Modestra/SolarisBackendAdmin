@@ -11,7 +11,6 @@
       @update:selection="onRowSelect"
     >
       <Column field="username" header="Логин" style="width: 34%"></Column>
-
       <Column field="email" header="E-mail" style="width: 34%"></Column>
       <Column field="category" header="Категория " style="width: 34%"></Column>
       <Column style="width: 80px">
@@ -19,21 +18,14 @@
           <div class="flex flex-row justify-center gap-2">
             <Button
               icon="pi pi-pencil"
-              @click="updateSelectedItem(data)"
+              @click.stop="updateSelectedItem(data)"
               severity="warn"
             ></Button>
             <Button
               icon="pi pi-times"
-              @click="deleteSelectedItem(data)"
+              @click.stop="deleteSelectedItem(data)"
               severity="danger"
             ></Button>
-            <UploadFileComponent :userId="data.user_id" />
-          </div>
-          <div
-            v-if="selectedRow && selectedRow.user_id === data.user_id"
-            class="p-2 bg-gray-100"
-          >
-            Дополнительная информация для пользователя: {{ data.username }}
           </div>
         </template>
       </Column>
@@ -58,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, inject } from 'vue';
+import { ref, onMounted, inject, watchEffect } from 'vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -68,22 +60,18 @@ import { useGetUserStore } from '../../../stores/getUsersStore';
 import { useDialog } from '../../../composables/useShowDialogs';
 import UploadFileComponent from '../../upload-file/UploadFileComponent.vue';
 import { useFileStore } from '../../../stores/fileStore';
+import type { SelectionData } from '../types';
+import { useRouter } from 'vue-router';
+import LoaderComponent from '../../../core/components/LoaderComponent.vue';
+
+const router = useRouter();
 
 const userService = inject('UserService') as any;
 const usersList = ref();
-const fileStore = useFileStore();
 
 const userStore = useGetUserStore();
 
-const selectedRow = ref(null);
-
-const showInfo = ref(false);
-
-function onRowSelect(newSelection) {
-  console.log('Выбранная строка:', newSelection);
-  selectedRow.value = newSelection;
-  showInfo.value = true;
-}
+const selectedRow = ref<SelectionData | null>(null);
 
 const {
   selectedItem,
@@ -93,6 +81,14 @@ const {
   openDeleteDialog,
   closeDialogs,
 } = useDialog();
+
+function onRowSelect(newSelection: SelectionData) {
+  selectedRow.value = newSelection;
+  console.log('selected row', selectedRow.value);
+  if (newSelection) {
+    router.push(`/users/${selectedRow.value.user_id}`);
+  }
+}
 
 function handleDeleteUser() {
   if (selectedItem.value?.user_id) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-column gap-2">
+  <div class="flex flex-column items-center justify-center gap-2">
     <SelectButton
       v-model="selectedOption"
       :options="options"
