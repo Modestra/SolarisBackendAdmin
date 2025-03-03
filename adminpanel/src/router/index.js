@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AuthorizationPage from '../features/authentification/pages/AuthorizationPage.vue';
+import UserFilesPage from '../features/upload-file/UserFilesPage.vue';
 import { useUserStore } from '../stores/userStore';
 
 const router = createRouter({
@@ -55,6 +56,12 @@ const router = createRouter({
           name: 'users',
           component: () =>
             import('../features/user-admin/pages/UserAdminPage.vue'),
+          meta: { protected: true },
+        },
+        {
+          path: '/users/:id',
+          name: 'userFiles',
+          component: () => import('../features/upload-file/UserFilesPage.vue'),
           meta: { protected: true },
         },
         {

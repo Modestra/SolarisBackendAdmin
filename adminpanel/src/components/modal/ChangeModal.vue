@@ -58,6 +58,46 @@
         </div>
       </div>
     </div>
+
+    <!--  -->
+    <div class="flex flex-col gap-4" v-if="props.type === 'user'">
+      <div class="flex items-center gap-4">
+        <label for="competitionTitle" class="font-semibold w-24">Логин</label>
+        <InputText
+          id="competitionTitle"
+          class="flex-auto"
+          v-model="user.username"
+          autocomplete="true"
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <label for="competitionDescription" class="font-semibold w-24"
+          >Email</label
+        >
+        <Textarea
+          v-model="user.email"
+          id="description"
+          rows="2"
+          cols="30"
+          placeholder="Введите описание конкурса"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          style="resize: none"
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <label for="competitionTask" class="font-semibold w-24"
+          >Категория</label
+        >
+        <InputText
+          id="competitionTask"
+          class="flex-auto"
+          v-model="user.category"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+    <!--  -->
+
     <div class="flex flex-col gap-4" v-if="props.type === 'competition'">
       <div class="flex items-center gap-4">
         <label for="competitionTitle" class="font-semibold w-24"
@@ -108,32 +148,36 @@
 </template>
 
 <script setup lang="ts">
-import Dialog from "primevue/dialog";
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
-import { defineProps, defineEmits, computed } from "vue";
-import Textarea from "primevue/textarea";
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import { computed } from 'vue';
+import Textarea from 'primevue/textarea';
 
 const props = defineProps({
   visible: Boolean,
-  user: Object,
+  user: {
+    type: Object,
+    default: () => ({}),
+  },
   competition: Object,
   type: String,
 });
 
 const type = computed(() => {
-  if (props.type === "teacher") return "учителя";
-  if (props.type === "student") return "ученика";
-  if (props.type === "competition") return "конкурс";
+  if (props.type === 'teacher') return 'учителя';
+  if (props.type === 'student') return 'ученика';
+  if (props.type === 'competition') return 'конкурс';
+  if (props.type === 'user') return 'пользователя';
 });
 
-const emit = defineEmits(["update:visible", "save"]);
+const emit = defineEmits(['update:visible', 'save']);
 
 function closeDialog() {
-  emit("update:visible", false);
+  emit('update:visible', false);
 }
 
 function saveTeacher() {
-  emit("save");
+  emit('save');
 }
 </script>

@@ -1,119 +1,59 @@
 <template>
-  <div class="flex flex-column gap-2">
-    <div class="flex flex-row justify-between">
-      <SelectButton v-model="value" :options="options" optionLabel="label" />
-      <InputGroup class="max-w-xs">
-        <InputGroupAddon>
-          <i class="pi pi-user"></i>
-        </InputGroupAddon>
-        <InputText placeholder="Найти пользователя..." />
-      </InputGroup>
+  <div class="flex flex-column items-center justify-center gap-2">
+    <SelectButton
+      v-model="selectedOption"
+      :options="options"
+      optionLabel="label"
+    />
+    <div v-if="isSearchVisible" class="flex justify-end">
+      <UserMenuComponent />
     </div>
-    <DataTable
-      paginator
-      :rows="10"
-      showGridlines
-      :value="usersList"
-      tableStyle="width: 80vw;"
-    >
-      <Column field="username" header="Логин"></Column>
-      <Column field="email" header="E-mail"></Column>
-      <Column field="category" header="Категория"></Column>
-      <Column style="width: 80px">
-        <template #body="{ data }">
-          <div class="flex flex-row justify-center gap-2">
-            <Button
-              icon="pi pi-pencil"
-              @click="updateSelectedItem(data)"
-              severity="warn"
-            ></Button>
-            <Button
-              icon="pi pi-times"
-              @click="deleteSelectedItem(data)"
-              severity="danger"
-            ></Button>
-          </div>
-        </template>
-      </Column>
-    </DataTable>
-    <Dialog
-      v-model:visible="visibleEdit"
-      modal
-      header="Edit Profile"
-      :style="{ width: '25rem' }"
-    >
-      <FormComponent :title="'Изменение'" :form-group="[]"></FormComponent>
-    </Dialog>
+    <CreateUserForm
+      v-if="
+        selectedOption.value === 'create' &&
+        !showTeacherForm &&
+        !showStudentForm
+      "
+    />
+    <CreateStudentForm v-if="showStudentForm" />
+    <CreateTeacherForm v-if="showTeacherForm" />
+    <UserTableComponent v-if="selectedOption.value === 'all'" />
+    <TeacherTableComponent v-if="selectedOption.value === 'teachers'" />
+    <StudentTableComponent v-if="selectedOption.value === 'students'" />
   </div>
 </template>
 
 <script setup lang="ts">
-enum DataTableType {
-  Users,
-  Teachers,
-  Students,
-}
-import { ref, onMounted, inject, watch, onUpdated } from 'vue';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
-import InputText from 'primevue/inputtext';
 import SelectButton from 'primevue/selectbutton';
-import Button from 'primevue/button';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import Dialog from 'primevue/dialog';
-import FormComponent from '../../../core/components/FormComponent.vue';
-import { FormModel } from '../../../core/interfaces/formtypes';
+import { onMounted, ref, watch } from 'vue';
+import UserTableComponent from '../components/UserTableComponent.vue';
+import CreateUserForm from '../../../components/form/CreateUserForm.vue';
+import CreateStudentForm from '../../../components/form/CreateStudentForm.vue';
+import CreateTeacherForm from '../../../components/form/CreateTeacherForm.vue';
+import {
+  showStudentForm,
+  showTeacherForm,
+} from '../../../composables/useShowUsers';
+import StudentTableComponent from '../components/StudentTableComponent.vue';
+import TeacherTableComponent from '../components/TeacherTableComponent.vue';
+import UserMenuComponent from '../components/UserMenuComponent.vue';
+import { useRoute } from 'vue-router';
 
-const userService = inject('UserService') as any;
-const usersList = ref();
-const visibleEdit = ref(false);
-
-const value = ref(DataTableType.Users);
 const options = ref([
-  { label: 'Пользователи', value: DataTableType.Users },
-  { label: 'Учителя', value: DataTableType.Teachers },
-  { label: 'Ученики', value: DataTableType.Students },
+  { label: 'Создать пользователя', value: 'create' },
+  { label: 'Все пользователи', value: 'all' },
+  { label: 'Все ученики', value: 'students' },
+  { label: 'Все учителя', value: 'teachers' },
 ]);
-watch(value, (oldTable, newTable) => {
-  switch (oldTable.value) {
-    case DataTableType.Users:
-      //router.push({ path: '', query: { table: 'users' } });
 
-      return;
-    case DataTableType.Teachers:
-      //router.push({ path: '', query: { table: 'teachers' } });
-      return;
-    case DataTableType.Students:
-      //router.push({ path: '', query: { table: 'students' } });
-      return;
-    default:
-      //router.push({ path: '', query: { table: 'users' } });
-      return;
+const isSearchVisible = ref(false);
+
+const selectedOption = ref(options.value[0]);
+watch(selectedOption, (newValue, oldValue) => {
+  if (newValue.value === 'create') {
+    isSearchVisible.value = false;
+  } else {
+    isSearchVisible.value = true;
   }
 });
-onUpdated(() => {});
-onMounted(() => {
-  userService.getListUsers().then((res: any[]) => {
-    usersList.value = res.data;
-  });
-});
-
-function deleteSelectedItem(data: any) {}
-
-function updateSelectedItem(data: any) {
-  visibleEdit.value = true;
-}
 </script>
-
-<style scoped>
-.p-inputgroupaddon {
-  background-color: #1f2a3e;
-}
-.p-inputtext {
-  background-color: #1f2a3e;
-}
-.p-togglebutton {
-  background: #1f2a3e;
-}
-</style>

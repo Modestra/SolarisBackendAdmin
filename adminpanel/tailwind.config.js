@@ -8,6 +8,5 @@ export default {
       'btn-orange': '#DE4700',
     },
   },
-  darkMode: false,
   plugins: [],
 };

@@ -4,5 +4,5 @@ export interface CreatedUser {
   username: string;
   category: string;
   teacherId?: string;
-  userId?: string;
+  user_id?: string | number;
 }

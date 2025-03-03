@@ -10,13 +10,19 @@ export default {
 };
 
 class UserService {
-    private _axiosR = axiosR;
+  private _axiosR = axiosR;
 
-    public loginAdmin(data: AuthModel) {
-        return this._axiosR.post("/auth/login", data)
-    }
+  public loginAdmin(data: AuthModel) {
+    return this._axiosR.post('/auth/login', data);
+  }
 
-    public getListUsers(){
-        return this._axiosR.get("/user")
-    }
+  public getListUsers() {
+    return this._axiosR.get('/user');
+  }
+  public getListStudents() {
+    return this._axiosR.get('/pupil');
+  }
+  public getListTeacher() {
+    return this._axiosR.get('/teacher');
+  }
 }
