@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosR = axios.create({
-  baseURL: 'http://185.135.82.172:8000/',
+  baseURL: 'http://45.147.178.196:8100//',
   //baseURL: import.meta.env.VITE_SERVER_URL,
   headers: { 'Content-Type': 'application/json' },
 });

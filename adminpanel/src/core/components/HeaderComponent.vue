@@ -12,7 +12,7 @@
           <RouterLink to="/competitions">Конкурсы</RouterLink>
           <RouterLink to="/certificates">Сертификаты</RouterLink>
           <RouterLink to="/mail">Почта</RouterLink>
-          <RouterLink to="/shop">Сертификаты</RouterLink>
+          <RouterLink to="/shop">Магазин</RouterLink>
         </div>
         <template #footer>
           <Button

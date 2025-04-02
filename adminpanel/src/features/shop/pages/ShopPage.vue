@@ -1,3 +1,9 @@
-<template></template>
+<template>
+  <div class="page">
+    <ShopFormComponent />
+  </div>
+</template>
 
-<script></script>
+<script setup lang="ts">
+import ShopFormComponent from '../component/ShopFormComponent.vue';
+</script>
