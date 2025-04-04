@@ -1,8 +1,8 @@
 <template>
-  <div v-if="isCreated" class="w-full mt-5">
+  <div v-if="isCreated" class="w-full mt-5 flex flex-col gap-5">
     <h2 class="text-5xl text-center">Пользователь успешно создан</h2>
-    <div>
-      <Button class="mx-auto bg-orange-500" @click="clearAddedUserState"
+    <div class="flex justify-center">
+      <Button class="flex justify-center" @click="clearAddedUserState"
         >К созданию пользователя</Button
       >
     </div>
@@ -82,17 +82,17 @@
 </template>
 
 <script setup lang="ts">
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 
 import {
   clearAddedUserState,
   handleSumbitStudent,
   isCreated,
-} from "../../composables/useCreateUser";
-import { computed, onMounted, reactive, ref, watch } from "vue";
-import { useGetUserStore } from "../../stores/getUsersStore";
-import { studentData } from "../../composables/useValidate";
+} from '../../composables/useCreateUser';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { useGetUserStore } from '../../stores/getUsersStore';
+import { studentData } from '../../composables/useValidate';
 
 const getUserStore = useGetUserStore();
 

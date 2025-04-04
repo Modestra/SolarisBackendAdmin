@@ -1,8 +1,8 @@
 <template>
-  <div v-if="isCreated" class="w-full mt-5">
+  <div v-if="isCreated" class="w-full mt-5 flex flex-col gap-5">
     <h2 class="text-5xl text-center">Пользователь успешно создан</h2>
-    <div>
-      <Button class="mx-auto" @click="clearAddedUserState"
+    <div class="flex justify-center">
+      <Button class="flex justify-center" @click="clearAddedUserState"
         >К созданию пользователя</Button
       >
     </div>
@@ -110,13 +110,13 @@
 </template>
 
 <script setup lang="ts">
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 
-import { errors, teacherData } from "../../composables/useValidate";
+import { errors, teacherData } from '../../composables/useValidate';
 import {
   clearAddedUserState,
   handleSumbitTeacher,
   isCreated,
-} from "../../composables/useCreateUser";
+} from '../../composables/useCreateUser';
 </script>
